@@ -142,5 +142,23 @@
         "feedback": null
       }
     ]
+  },
+  {
+    "entry_id": "9b1bb619-9db9-4be2-8749-750481dcbbe4",
+    "timestamp": "2026-11-15T17:56:43.309718",
+    "session_id": "mock_session",
+    "turn_index": 2,
+    "scenario_id": null,
+    "user_message": "ספר לי על התואר השני שלך",
+    "status": "APPROVED",
+    "final_response": "סיימתי תואר שני במדעי המחשב בטכניון.",
+    "attempts": [
+      {
+        "attempt_number": 1,
+        "candidate_response": "סיימתי תואר שני במדעי המחשב בטכניון.",
+        "is_acceptable": true,
+        "feedback": null
+      }
+    ]
   }
 ]

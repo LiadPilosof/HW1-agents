@@ -1,20 +1,27 @@
 """
-Modern & Clean Hebrew Gradio Chat Interface for Part A (Actor - Response Generator).
-Designed with professional SaaS aesthetics, native RTL layout, and zero generic clutter.
+Hebrew Gradio Chat Interface for Part A (Actor - Response Generator).
+Fully localized to Hebrew with professional typography, native RTL styling,
+custom SVG avatars, and zero generic clutter.
 """
 
+from pathlib import Path
 import gradio as gr
 from src.actor import chat_response
 from src.config import DEFAULT_MODEL_NAME
 
-# Sleek typography and custom modern theme
+# Assets paths
+ASSETS_DIR = Path(__file__).resolve().parent / "assets"
+USER_AVATAR_PATH = str(ASSETS_DIR / "user_avatar.svg")
+BOT_AVATAR_PATH = str(ASSETS_DIR / "bot_avatar.svg")
+
+# Clean, modern Hebrew typography theme
 CUSTOM_THEME = gr.themes.Soft(
     primary_hue="blue",
     neutral_hue="slate",
     font=[gr.themes.GoogleFont("Rubik"), "-apple-system", "BlinkMacSystemFont", "sans-serif"],
 )
 
-# Custom CSS for modern, premium appearance (no generic AI-slop look)
+# Comprehensive CSS rules for authentic RTL Hebrew chat experience
 CUSTOM_CSS = """
 @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap');
 
@@ -25,26 +32,29 @@ CUSTOM_CSS = """
     --card-bg: #ffffff;
     --border: #e2e8f0;
     --text-primary: #0f172a;
-    --text-secondary: #475569;
+    --text-secondary: #334155;
     --text-muted: #64748b;
 }
 
+/* Global Font & Full RTL enforcement */
+* {
+    font-family: 'Rubik', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+}
+
 body, html, .gradio-container {
-    font-family: 'Rubik', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
     direction: rtl !important;
     text-align: right !important;
     background-color: var(--bg-main) !important;
     color: var(--text-primary) !important;
 }
 
-/* Wrapper alignment and maximum readability width */
 .gradio-container {
-    max-width: 920px !important;
+    max-width: 940px !important;
     margin: 0 auto !important;
     padding: 1.5rem 1rem !important;
 }
 
-/* Profile Showcase Header Card */
+/* Header Profile Showcase Card */
 .profile-card {
     background: var(--card-bg);
     border: 1px solid var(--border);
@@ -66,24 +76,23 @@ body, html, .gradio-container {
 }
 
 .avatar-circle {
-    width: 56px;
-    height: 56px;
+    width: 58px;
+    height: 58px;
     border-radius: 50%;
     background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
     color: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.3rem;
+    font-size: 1.35rem;
     font-weight: 700;
     box-shadow: 0 4px 14px rgba(37, 99, 235, 0.28);
     flex-shrink: 0;
-    letter-spacing: -0.5px;
 }
 
 .profile-titles h2 {
     margin: 0 0 0.25rem 0;
-    font-size: 1.35rem;
+    font-size: 1.4rem;
     font-weight: 700;
     color: var(--text-primary);
     display: flex;
@@ -94,9 +103,9 @@ body, html, .gradio-container {
 .verified-badge {
     background: #e0f2fe;
     color: #0284c7;
-    font-size: 0.75rem;
-    width: 18px;
-    height: 18px;
+    font-size: 0.78rem;
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
     display: inline-flex;
     align-items: center;
@@ -106,31 +115,31 @@ body, html, .gradio-container {
 
 .profile-titles p {
     margin: 0;
-    font-size: 0.925rem;
+    font-size: 0.95rem;
     color: var(--text-secondary);
     line-height: 1.4;
 }
 
 .affiliation-sub {
-    font-size: 0.825rem !important;
+    font-size: 0.85rem !important;
     color: var(--text-muted) !important;
-    margin-top: 0.2rem !important;
+    margin-top: 0.25rem !important;
 }
 
 .profile-meta {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.4rem;
+    gap: 0.45rem;
 }
 
 .badge-pill {
     display: inline-flex;
     align-items: center;
     gap: 0.45rem;
-    padding: 0.28rem 0.75rem;
+    padding: 0.3rem 0.8rem;
     border-radius: 9999px;
-    font-size: 0.785rem;
+    font-size: 0.8rem;
     font-weight: 500;
 }
 
@@ -141,8 +150,8 @@ body, html, .gradio-container {
 }
 
 .status-dot {
-    width: 7px;
-    height: 7px;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
     background-color: #10b981;
     box-shadow: 0 0 0 2px #d1fae5;
@@ -160,13 +169,13 @@ body, html, .gradio-container {
     border: 1px solid #bfdbfe;
 }
 
-/* Quick Suggestion Chips */
+/* Suggestion Chips */
 .suggestions-wrap {
     margin-bottom: 1rem;
 }
 
 .suggestions-header {
-    font-size: 0.825rem;
+    font-size: 0.85rem;
     font-weight: 600;
     color: var(--text-muted);
     margin-bottom: 0.5rem;
@@ -182,8 +191,8 @@ body, html, .gradio-container {
     background: #ffffff !important;
     border: 1px solid var(--border) !important;
     border-radius: 9999px !important;
-    padding: 0.4rem 0.85rem !important;
-    font-size: 0.825rem !important;
+    padding: 0.45rem 0.95rem !important;
+    font-size: 0.84rem !important;
     font-weight: 500 !important;
     color: var(--text-secondary) !important;
     cursor: pointer !important;
@@ -196,16 +205,42 @@ body, html, .gradio-container {
     border-color: #cbd5e1 !important;
     color: var(--text-primary) !important;
     transform: translateY(-1px);
-    box-shadow: 0 3px 6px rgba(15, 23, 42, 0.05) !important;
+    box-shadow: 0 3px 8px rgba(15, 23, 42, 0.06) !important;
 }
 
-/* Chatbot Window Styling */
+/* Chatbot Window & Message Bubbles in Hebrew */
 .chat-window {
     border-radius: 16px !important;
     border: 1px solid var(--border) !important;
     background: var(--card-bg) !important;
     box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.04) !important;
     overflow: hidden !important;
+}
+
+.chat-window, .chat-window * {
+    direction: rtl !important;
+    text-align: right !important;
+}
+
+/* Handle mixed Hebrew/English without reversing punctuation */
+.message, .message *, .bubble, .bubble * {
+    direction: rtl !important;
+    text-align: right !important;
+    unicode-bidi: embed !important;
+    line-height: 1.65 !important;
+    font-size: 0.95rem !important;
+}
+
+/* Code spans inside Hebrew text */
+code {
+    direction: ltr !important;
+    display: inline-block !important;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
+    font-size: 0.88em !important;
+    background: #f1f5f9 !important;
+    padding: 0.15rem 0.4rem !important;
+    border-radius: 6px !important;
+    color: #0f172a !important;
 }
 
 /* Input Area Row */
@@ -222,8 +257,10 @@ body, html, .gradio-container {
     background: #ffffff !important;
     font-family: inherit !important;
     font-size: 0.95rem !important;
-    padding: 0.85rem 1.1rem !important;
+    padding: 0.85rem 1.15rem !important;
     line-height: 1.5 !important;
+    direction: rtl !important;
+    text-align: right !important;
     transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
 }
 
@@ -238,7 +275,7 @@ body, html, .gradio-container {
     color: #ffffff !important;
     border-radius: 14px !important;
     font-weight: 600 !important;
-    padding: 0.75rem 1.5rem !important;
+    padding: 0.75rem 1.6rem !important;
     border: none !important;
     cursor: pointer !important;
     transition: all 0.2s ease !important;
@@ -248,7 +285,7 @@ body, html, .gradio-container {
 .send-btn:hover {
     background: var(--primary-hover) !important;
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35) !important;
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35) !important;
 }
 
 .clear-btn {
@@ -257,7 +294,7 @@ body, html, .gradio-container {
     border-radius: 14px !important;
     color: var(--text-muted) !important;
     font-weight: 500 !important;
-    padding: 0.75rem 1.1rem !important;
+    padding: 0.75rem 1.2rem !important;
     cursor: pointer !important;
     transition: all 0.2s ease !important;
 }
@@ -271,7 +308,7 @@ body, html, .gradio-container {
 /* Discreet Footer */
 .footer-note {
     text-align: center;
-    font-size: 0.785rem;
+    font-size: 0.8rem;
     color: #94a3b8;
     margin-top: 1.25rem;
     line-height: 1.5;
@@ -280,11 +317,11 @@ body, html, .gradio-container {
 
 EMPTY_CHAT_PLACEHOLDER = """
 <div style="text-align: center; padding: 3rem 1.5rem; color: #64748b;">
-    <div style="width: 52px; height: 52px; margin: 0 auto 1.25rem; background: #eff6ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; color: #2563eb; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.12);">💬</div>
-    <h3 style="margin: 0 0 0.5rem 0; font-size: 1.25rem; font-weight: 700; color: #0f172a;">שלום! אני הנציג הדיגיטלי של אלון ברק</h3>
-    <p style="margin: 0 auto; max-width: 520px; font-size: 0.925rem; line-height: 1.6; color: #475569;">
-        אני כאן כדי לשוחח עמכם ולענות על שאלות אודות ההשכלה, הניסיון התעסוקתי, המיומנויות והפרויקטים שלי.<br>
-        כל תשובותיי מבוססות <b>אך ורק על מקורות הרקע הרשמיים</b>.
+    <div style="width: 56px; height: 56px; margin: 0 auto 1.25rem; background: #eff6ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.7rem; color: #2563eb; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.12);">💬</div>
+    <h3 style="margin: 0 0 0.5rem 0; font-size: 1.25rem; font-weight: 700; color: #0f172a;">שלום! אני הנציג האישי של אלון ברק</h3>
+    <p style="margin: 0 auto; max-width: 520px; font-size: 0.935rem; line-height: 1.6; color: #475569;">
+        אני כאן כדי לשוחח עמכם ולענות על שאלות בנושאי השכלה, ניסיון מקצועי, מיומנויות ופרויקטים.<br>
+        כל המידע מבוסס <b>אך ורק על מקורות הרקע הרשמיים</b>.
     </p>
 </div>
 """
@@ -295,20 +332,20 @@ HEADER_HTML = f"""
         <div class="avatar-circle">אב</div>
         <div class="profile-titles">
             <h2>אלון ברק <span class="verified-badge" title="מאומת מול מקורות הרקע">✓</span></h2>
-            <p>Senior AI Engineer &amp; Machine Learning Specialist</p>
-            <p class="affiliation-sub">TechNova Solutions · מוסמך הטכניון ואונ׳ תל אביב</p>
+            <p>מהנדס בינה מלאכותית בכיר ומומחה למידת מכונה</p>
+            <p class="affiliation-sub">חברת TechNova Solutions · מוסמך הטכניון ואוניברסיטת תל אביב</p>
         </div>
     </div>
     <div class="profile-meta">
         <div class="badge-pill badge-status">
             <span class="status-dot"></span>
-            <span>נציג פעיל (Actor)</span>
+            <span>יוצר התשובה פעיל (Actor)</span>
         </div>
         <div class="badge-pill badge-grounding">
-            <span>🔒 ביסוס קפדני במקורות</span>
+            <span>🔒 ביסוס מלא על מקורות המידע</span>
         </div>
         <div class="badge-pill badge-model">
-            <span>מודל: <b>{DEFAULT_MODEL_NAME}</b></span>
+            <span>מודל פעיל: <b>{DEFAULT_MODEL_NAME}</b></span>
         </div>
     </div>
 </div>
@@ -324,42 +361,44 @@ SUGGESTIONS = [
 
 
 def create_demo() -> gr.Blocks:
-    """Builds a modern, polished Hebrew chat interface with custom blocks."""
-    with gr.Blocks(title="אלון ברק | Digital Twin (Actor)") as demo:
-        # Header profile card
+    """Builds a modern, Hebrew-adapted chat interface with custom blocks."""
+    with gr.Blocks(title="אלון ברק | צ׳אט אישי (יוצר התשובה)") as demo:
+        # Header profile card in Hebrew
         gr.HTML(HEADER_HTML)
 
-        # Quick Suggestion Chips
+        # Quick Suggestion Chips in Hebrew
         with gr.Column(elem_classes=["suggestions-wrap"]):
-            gr.HTML('<div class="suggestions-header">💡 שאלות נפוצות להתחלה מהירה:</div>')
+            gr.HTML('<div class="suggestions-header">💡 שאלות מובילות להתחלת השיחה:</div>')
             with gr.Row(elem_classes=["chips-row"]):
                 chip_buttons = []
                 for label, prompt_text in SUGGESTIONS:
                     btn = gr.Button(label, elem_classes=["chip-btn"], size="sm")
                     chip_buttons.append((btn, prompt_text))
 
-        # Main Chatbot Container
+        # Main Chatbot Container with custom Hebrew/RTL styling and localized SVG avatars
         chatbot = gr.Chatbot(
             rtl=True,
-            height=480,
+            height=490,
             show_label=False,
             placeholder=EMPTY_CHAT_PLACEHOLDER,
+            avatar_images=(USER_AVATAR_PATH, BOT_AVATAR_PATH),
+            buttons=["copy"],
             elem_classes=["chat-window"],
         )
 
-        # Bottom Input Bar
+        # Bottom Input Bar localized to Hebrew
         with gr.Row(elem_classes=["input-row"]):
             msg_input = gr.Textbox(
-                placeholder="הקלד כאן שאלה (לדוגמה: ספר לי על הפרויקטים שהובלת)...",
+                placeholder="שאלו אותי שאלה על הניסיון, ההשכלה או הפרויקטים שלי...",
                 show_label=False,
                 container=False,
                 scale=8,
                 elem_classes=["chat-input"],
             )
-            send_btn = gr.Button("שלח ↵", variant="primary", scale=1, elem_classes=["send-btn"])
-            clear_btn = gr.Button("נקה שיחה", variant="secondary", scale=1, elem_classes=["clear-btn"])
+            send_btn = gr.Button("שלח ←", variant="primary", scale=1, elem_classes=["send-btn"])
+            clear_btn = gr.Button("איפוס שיחה", variant="secondary", scale=1, elem_classes=["clear-btn"])
 
-        # Footer note
+        # Footer note in Hebrew
         gr.HTML(
             '<div class="footer-note">'
             'מטלה 1: מערכות בינה מלאכותית · חלק א׳: יוצר התשובה (Actor) עם יומן בדיקה נפרד (inspection log)'
@@ -382,14 +421,13 @@ def create_demo() -> gr.Blocks:
         def clear_chat():
             return "", []
 
-        # Wire events
+        # Wire input events
         msg_input.submit(user_send, [msg_input, chatbot], [msg_input, chatbot])
         send_btn.click(user_send, [msg_input, chatbot], [msg_input, chatbot])
         clear_btn.click(clear_chat, None, [msg_input, chatbot])
 
         # Wire suggestion chips
         for btn, prompt_text in chip_buttons:
-            # When clicking a chip, populate and send automatically
             def make_chip_handler(text):
                 return lambda hist: user_send(text, hist)
 
