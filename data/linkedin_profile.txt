@@ -1,0 +1,67 @@
+# הערה: זהו פרופיל לדוגמה (Sample / Fictional Profile) שנוצר לצורך מטלה אקדמית.
+
+אלון ברק | Alon Barak
+Senior AI Engineer & Machine Learning Specialist
+תל אביב-יפו, ישראל | alon.barak.sample@email.com | linkedin.com/in/alon-barak-sample
+
+תמצית מקצועית (About)
+מהנדס בינה מלאכותית ומדען נתונים עם למעלה מ-6 שנות ניסיון במחקר, פיתוח ופריסה של מודלים ומערכות AI בסביבות ייצור. מתמחה במודלי שפה גדולים (LLMs), ארכיטקטורות RAG (Retrieval-Augmented Generation), סוכנים אוטונומיים (Agentic AI) ופתרונות NLP מתקדמים. בעל תואר שני (M.Sc.) במדעי המחשב עם התמחות בבינה מלאכותית מהטכניון ותואר ראשון בהצטיינות מאוניברסיטת תל אביב. בעל ניסיון רב בהובלה טכנית, אופטימיזציה של זמני אחזור ודיוק, וחיבור בין מחקר תיאורטי ליישומים מסחריים אמינים.
+
+ניסיון תעסוקתי (Work Experience)
+
+1. Senior AI Engineer | TechNova Solutions | תל אביב
+   ינואר 2023 - כיום (שנה ו-11 חודשים)
+   - הובלת תחום מודלי השפה והסוכנים האוטונומיים בחברה, מפיתוח הרעיון ועד לפריסה מלאה בייצור (Production).
+   - תכנון והקמת ארכיטקטורת RAG מתקדמת לשירות ענן, המשלבת מסדי נתונים וקטוריים (Milvus, Pinecone), חיפוש היברידי (Hybrid Search) ו-Reranking. הארכיטקטורה הפחיתה את זמני האחזור ב-40% ושיפרה את דיוק התשובות (Faithfulness) ב-25%.
+   - התאמה ואופטימיזציה של מודלים בקוד פתוח (Llama-3, Mistral) באמצעות טכניקות Quantization ו-Fine-Tuning (QLoRA) לפריסה יעילה וחסכונית בענן AWS.
+   - חניכה מקצועית (Mentoring) של 4 מהנדסי ML ומהנדסי תוכנה בצוות, והנחיית סדנאות פנימיות בנושאי Generative AI ובקרת איכות לתשובות מודל.
+
+2. Machine Learning Engineer | DataPulse Ltd | הרצליה
+   אוקטובר 2021 - דצמבר 2022 (שנה ו-3 חודשים)
+   - פיתוח אלגוריתמי המלצה ומודלי NLP לסיווג סנטימנט וניתוח טקסטים עבור פלטפורמת SaaS פיננסית.
+   - בניית צינורות נתונים (Data Pipelines) מבוזרים לעיבוד מיליוני רשומות יומיות באמצעות PySpark ו-Kafka.
+   - תכנון שרתי שירות (Inference Microservices) יעילים ב-FastAPI וב-Docker, הפועלים על גבי Kubernetes (EKS).
+   - שיתוף פעולה עם צוותי DevOps למימוש ניטור רציף (MLOps) לאיתור סטיית נתונים (Data Drift) וירידה בביצועי המודל.
+
+3. Software Developer (משרת סטודנט ואחר כך מהנדס) | InnoSoft Technologies | רמת גן
+   מרץ 2019 - ספטמבר 2021 (שנתיים ו-7 חודשים)
+   - פיתוח שירותי Backend ב-Python תוך שימוש ב-Django וב-PostgreSQL.
+   - כתיבת בדיקות יחידה ואינטגרציה (PyTest) עם כיסוי קוד של מעל 85%, והטמעת תהליכי CI/CD מלאים ב-GitHub Actions.
+   - עבודה הדוקה בסביבת Agile/Scrum לצד מנהלי מוצר ומהנדסי Frontend.
+
+השכלה (Education)
+
+1. תואר שני (M.Sc.) במדעי המחשב - התמחות בבינה מלאכותית | הטכניון - מכון טכנולוגי לישראל
+   2021 - 2023 | ממוצע ציונים: 94
+   - עבודת תזה: "Efficient Fine-Tuning and Inference of Large Language Models for Domain-Specific Retrieval-Augmented Generation" (בהנחיית פרופ' דן גל).
+   - קורסים עיקריים: למידה עמוקה מתקדמת (Advanced Deep Learning), עיבוד שפה טבעית (NLP), למידת חיזוק (Reinforcement Learning), מודלים הסתברותיים גרפיים, אלגוריתמים מבוזרים.
+
+2. תואר ראשון (B.Sc.) במדעי המחשב בהצטיינות | אוניברסיטת תל אביב
+   2017 - 2020 | ממוצע ציונים: 91 (סיום בהצטיינות - Magna Cum Laude)
+   - קורסים עיקריים: מבני נתונים ואלגוריתמים, מבוא לבינה מלאכותית, מערכות הפעלה, מסדי נתונים, רשתות תקשורת מחשבים, אלגברה לינארית, הסתברות וסטטיסטיקה.
+
+פרויקטים בולטים (Projects)
+
+1. DocuSense AI (2023 - 2024):
+   - מערכת AI אינטליגנטית לאחזור מידע ותשאול מסמכים מרובי פורמטים (PDF, Word, Confluence) בארגוני Enterprise.
+   - טכנולוגיות: Python, LangChain, OpenAI API, Milvus, FastAPI, Docker, Next.js.
+   - תוצאות: המערכת קיצרה את זמן איתור המידע הממוצע מ-45 דקות ל-30 שניות, והוטמעה בהצלחה אצל מעל 500 עובדי חברה פעילים.
+
+2. SmartCode Reviewer (2022):
+   - כלי עזר מבוסס AI לביצוע סקירות קוד (Pull Requests) אוטומטיות ואיתור חולשות אבטחה לפני מיזוג ל-Main.
+   - טכנולוגיות: PyTorch, Hugging Face Transformers, GitHub Actions Webhooks, Python.
+   - תוצאות: הכלי שיפר את קצב בדיקת ה-PRs ב-35% וזיהה חולשות אבטחה בסיסיות בדיוק של 88%.
+
+3. PulseHealth Predictor (2020 - פרויקט גמר תואר ראשון):
+   - מודל למידת מכונה לחיזוי סיכויי אשפוז חוזר של מטופלים כרוניים בבתי חולים תוך 30 יום.
+   - טכנולוגיות: Scikit-Learn, XGBoost, Pandas, SHAP Explainability.
+   - תוצאות: זכייה במקום הראשון בהאקתון בריאות דיגיטלית של אוניברסיטת תל אביב וציון 98 בפרויקט הגמר.
+
+מיומנויות וכישורים (Skills)
+
+- שפות תכנות וסביבות: Python (מומחה), C++, SQL, Bash, JavaScript.
+- בינה מלאכותית ו-Machine Learning: PyTorch, TensorFlow, Hugging Face, Transformers, Scikit-Learn, LangChain, LlamaIndex, OpenAI API.
+- ארכיטקטורות ומודלים: LLMs, RAG, Agentic Workflows, Semantic Search, Fine-Tuning (LoRA/QLoRA), Vector DBs (Milvus, Pinecone, Chroma).
+- תשתיות ו-DevOps: Docker, Kubernetes, AWS (SageMaker, EC2, S3), CI/CD (GitHub Actions), FastAPI, Linux.
+- מיומנויות רכות (Soft Skills): הובלה טכנית, עבודת צוות רב-תחומית, חניכת עובדים, כושר ביטוי גבוה בכתב ובעל פה, חשיבה אנליטית ופתרון בעיות סבוכות.
+- שפות: עברית (שפת אם), אנגלית (רמה מקצועית שוטפת).
