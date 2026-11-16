@@ -93,6 +93,19 @@ def test_history_normalization():
     assert norm2[2] == {"role": "user", "content": "מה שמך?"}
     assert norm2[3] == {"role": "assistant", "content": "שמי אלון ברק."}
 
+    # Format 3: Gradio 6 messages with content as list of dicts or python repr
+    history_gradio6 = [
+        {"role": "user", "content": [{"text": "שלום", "type": "text"}]},
+        {"role": "assistant", "content": [{"text": "שלום! איך אוכל לעזור?", "type": "text"}]},
+        {"role": "user", "content": "מה שמך?"},
+        {"role": "assistant", "content": "[{'text': 'שמי אלון ברק.', 'type': 'text'}]"},
+    ]
+    norm3 = normalize_history(history_gradio6)
+    assert norm3[0] == {"role": "user", "content": "שלום"}
+    assert norm3[1] == {"role": "assistant", "content": "שלום! איך אוכל לעזור?"}
+    assert norm3[2] == {"role": "user", "content": "מה שמך?"}
+    assert norm3[3] == {"role": "assistant", "content": "שמי אלון ברק."}
+
     print("✓ test_history_normalization passed")
 
 

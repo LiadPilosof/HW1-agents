@@ -17,6 +17,42 @@ from src.logger import inspection_logger
 from src.prompts import build_system_prompt
 
 
+def extract_text(content: Any) -> str:
+    """
+    Extracts pure string content from various Gradio 5/6 content shapes:
+    - plain string: "שלום"
+    - list of dicts: [{'text': '...', 'type': 'text'}]
+    - dict: {'text': '...'}
+    - stringified python repr: "[{'text': '...', 'type': 'text'}]"
+    """
+    if not content:
+        return ""
+    if isinstance(content, str):
+        trimmed = content.strip()
+        if (trimmed.startswith("[{'text'") or trimmed.startswith('[{"text"')) and (trimmed.endswith("}]") or trimmed.endswith("']")):
+            try:
+                import ast
+                parsed = ast.literal_eval(trimmed)
+                if isinstance(parsed, list) and len(parsed) > 0 and isinstance(parsed[0], dict) and "text" in parsed[0]:
+                    return str(parsed[0]["text"])
+            except Exception:
+                pass
+        return content
+    elif isinstance(content, list):
+        parts = []
+        for p in content:
+            if isinstance(p, dict) and "text" in p:
+                parts.append(str(p["text"]))
+            elif isinstance(p, str):
+                parts.append(p)
+            else:
+                parts.append(str(p))
+        return "".join(parts)
+    elif isinstance(content, dict) and "text" in content:
+        return str(content["text"])
+    return str(content)
+
+
 def normalize_history(history: Optional[List[Any]]) -> List[Dict[str, str]]:
     """
     Normalizes history from Gradio into standard OpenAI message dicts:
@@ -32,13 +68,13 @@ def normalize_history(history: Optional[List[Any]]) -> List[Dict[str, str]]:
             role = item.get("role")
             content = item.get("content")
             if role in ("user", "assistant") and content is not None:
-                normalized.append({"role": role, "content": str(content)})
+                normalized.append({"role": role, "content": extract_text(content)})
         elif isinstance(item, (list, tuple)) and len(item) == 2:
             user_msg, bot_msg = item
             if user_msg is not None:
-                normalized.append({"role": "user", "content": str(user_msg)})
+                normalized.append({"role": "user", "content": extract_text(user_msg)})
             if bot_msg is not None:
-                normalized.append({"role": "assistant", "content": str(bot_msg)})
+                normalized.append({"role": "assistant", "content": extract_text(bot_msg)})
 
     return normalized
 
@@ -86,7 +122,7 @@ class Actor:
             messages=messages,
         )
 
-        candidate_response = response.choices[0].message.content or ""
+        candidate_response = extract_text(response.choices[0].message.content or "")
 
         # In Part A, log this turn to the inspection log
         turn_index = (len(formatted_history) // 2) + 1
