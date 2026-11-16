@@ -1,236 +1,758 @@
 [
   {
-    "entry_id": "01c23932-73d4-4040-9225-8ea3ec3fa53a",
-    "timestamp": "2026-11-15T17:49:07.121117",
-    "session_id": "default_session",
+    "entry_id": "8eb306eb-41a4-44c7-8b88-c4bb5c04bd63",
+    "timestamp": "2026-11-16T15:49:19",
+    "session_id": "live-tests",
     "turn_index": 1,
-    "scenario_id": null,
-    "user_message": "מי אתה?",
+    "question": "באיזה מוסד עשית את התואר השני שלך?",
+    "actor_model": "gpt-5.4-mini",
+    "critic_model": "gpt-5.4-mini",
     "status": "APPROVED",
-    "final_response": "אני הנציג הדיגיטלי האישי של אלון ברק, מבוסס על הפרופיל המקצועי והאקדמי שלו.  \nאני יכול לספר בגוף ראשון על ההשכלה שלי, הניסיון התעסוקתי, המיומנויות והפרויקטים שמופיעים במקורות שסופקו.",
-    "attempts": [
-      {
-        "attempt_number": 1,
-        "candidate_response": "אני הנציג הדיגיטלי האישי של אלון ברק, מבוסס על הפרופיל המקצועי והאקדמי שלו.  \nאני יכול לספר בגוף ראשון על ההשכלה שלי, הניסיון התעסוקתי, המיומנויות והפרויקטים שמופיעים במקורות שסופקו.",
-        "is_acceptable": true,
-        "feedback": null
-      }
-    ]
+    "candidate_response": "עשיתי את התואר השני שלי במדעי המחשב בטכניון – מכון טכנולוגי לישראל.",
+    "evaluation_completed": true,
+    "evaluation": {
+      "is_acceptable": true,
+      "feedback": "התגובה נתמכת במקורות: במקורות מצוין שהתואר השני נעשה בטכניון – מכון טכנולוגי לישראל, והיא עונה ישירות על שאלת המשתמש."
+    },
+    "technical_error": null,
+    "displayed_response": "עשיתי את התואר השני שלי במדעי המחשב בטכניון – מכון טכנולוגי לישראל."
   },
   {
-    "entry_id": "e3908f8a-68a8-4256-89a6-4baadf2d623a",
-    "timestamp": "2026-11-15T17:49:24.296822",
-    "session_id": "default_session",
+    "entry_id": "406cb2b1-cf33-49b9-aa64-4741fb960a05",
+    "timestamp": "2026-11-16T15:49:22",
+    "session_id": "live-tests",
     "turn_index": 2,
-    "scenario_id": null,
-    "user_message": "איפה עבדת",
+    "question": "ובאיזה ממוצע סיימת אותו?",
+    "actor_model": "gpt-5.4-mini",
+    "critic_model": "gpt-5.4-mini",
     "status": "APPROVED",
-    "final_response": "עבדתי ב־TechNova Solutions בתל אביב, שם אני עובד כיום כ־Senior AI Engineer, וב־DataPulse Ltd בהרצליה כ־Machine Learning Engineer.  \nלפני כן עבדתי ב־InnoSoft Technologies ברמת גן, תחילה כמשרת סטודנט ובהמשך כמהנדס.",
-    "attempts": [
-      {
-        "attempt_number": 1,
-        "candidate_response": "עבדתי ב־TechNova Solutions בתל אביב, שם אני עובד כיום כ־Senior AI Engineer, וב־DataPulse Ltd בהרצליה כ־Machine Learning Engineer.  \nלפני כן עבדתי ב־InnoSoft Technologies ברמת גן, תחילה כמשרת סטודנט ובהמשך כמהנדס.",
-        "is_acceptable": true,
-        "feedback": null
-      }
-    ]
+    "candidate_response": "סיימתי את התואר השני עם ממוצע 94.",
+    "evaluation_completed": true,
+    "evaluation": {
+      "is_acceptable": true,
+      "feedback": "התשובה נתמכת במקורות: בפרופיל מצוין שממוצע הציונים בתואר השני בטכניון הוא 94. בנוסף, היא עונה ישירות לשאלה ובסגנון תמציתי ובגוף ראשון."
+    },
+    "technical_error": null,
+    "displayed_response": "סיימתי את התואר השני עם ממוצע 94."
   },
   {
-    "entry_id": "7d20c7a2-acde-4490-9c66-2f7beb3d4575",
-    "timestamp": "2026-11-15T17:49:31.551327",
-    "session_id": "default_session",
+    "entry_id": "ae3f69ad-6e0b-471c-818e-8d7cf9bdc746",
+    "timestamp": "2026-11-16T15:49:25",
+    "session_id": "live-tests",
+    "turn_index": 1,
+    "question": "מה הציון שלך בבחינה הפסיכומטרית?",
+    "actor_model": "gpt-5.4-mini",
+    "critic_model": "gpt-5.4-mini",
+    "status": "APPROVED",
+    "candidate_response": "אין לי במקורות המידע שסופקו ציון פסיכומטרי. אם תרצה, אני יכול לספר על ההשכלה שלי באוניברסיטת תל אביב ובטכניון.",
+    "evaluation_completed": true,
+    "evaluation": {
+      "is_acceptable": true,
+      "feedback": "התשובה תקינה: היא מבהירה שבמקורות שסופקו לא מופיע ציון פסיכומטרי, ולכן אינה ממציאה מידע. בנוסף, היא עונה ישירות לשאלה ושומרת על סגנון ענייני ומכבד."
+    },
+    "technical_error": null,
+    "displayed_response": "אין לי במקורות המידע שסופקו ציון פסיכומטרי. אם תרצה, אני יכול לספר על ההשכלה שלי באוניברסיטת תל אביב ובטכניון."
+  },
+  {
+    "entry_id": "be4c84cb-c6e6-4fe4-92a3-90f7cab29c4c",
+    "timestamp": "2026-11-16T15:53:16",
+    "session_id": "b5dc6311f018",
+    "turn_index": 1,
+    "question": "יי",
+    "actor_model": "gpt-5.4-mini",
+    "critic_model": "gpt-5.4-mini",
+    "status": "APPROVED",
+    "candidate_response": "היי, נעים להכיר. איך אפשר לעזור?",
+    "evaluation_completed": true,
+    "evaluation": {
+      "is_acceptable": true,
+      "feedback": "התשובה מתאימה לפתיחת שיחה, ברורה ותמציתית, ואינה מוסיפה עובדות חדשות שלא מופיעות במקורות. היא עונה ישירות להודעת המשתמש הקצרה 'יי' בסגנון מנומס."
+    },
+    "technical_error": null,
+    "displayed_response": "היי, נעים להכיר. איך אפשר לעזור?"
+  },
+  {
+    "entry_id": "7a438647-b16e-4ae5-8fcd-cf5e894da0d5",
+    "timestamp": "2026-11-16T16:10:30",
+    "session_id": "b8c10397361f",
+    "turn_index": 1,
+    "question": "היי",
+    "actor_model": "gpt-5.4-mini",
+    "critic_model": "gpt-5.4-mini",
+    "status": "APPROVED",
+    "candidate_response": "היי, נעים להכיר. אני אלון ברק, נציג דיגיטלי המבוסס על הפרופיל והסיכום האישי שלי. איך אפשר לעזור?",
+    "evaluation_completed": true,
+    "evaluation": {
+      "is_acceptable": true,
+      "feedback": "התשובה מתאימה לשיחה, מנוסחת בעברית בגוף ראשון, קצרה ומכבדת. העובדה 'אלון ברק' והיותו נציג דיגיטלי המבוסס על הפרופיל והסיכום האישי נתמכות במקורות, ואין בה מידע שגוי או מופרז."
+    },
+    "technical_error": null,
+    "displayed_response": "היי, נעים להכיר. אני אלון ברק, נציג דיגיטלי המבוסס על הפרופיל והסיכום האישי שלי. איך אפשר לעזור?"
+  },
+  {
+    "entry_id": "4a7b0d55-dc09-4cdd-a64e-ed276ac1966f",
+    "timestamp": "2026-11-16T16:10:43",
+    "session_id": "b8c10397361f",
+    "turn_index": 2,
+    "question": "קוראים לי ליעד",
+    "actor_model": "gpt-5.4-mini",
+    "critic_model": "gpt-5.4-mini",
+    "status": "APPROVED",
+    "candidate_response": "נעים להכיר, ליעד. איך אפשר לעזור?",
+    "evaluation_completed": true,
+    "evaluation": {
+      "is_acceptable": true,
+      "feedback": "התשובה תקינה: היא עונה ישירות לפנייה האישית של המשתמש, אינה מוסיפה עובדות לא מבוססות, ונוסחת בעברית בגוף ראשון ובסגנון קצר ומכבד."
+    },
+    "technical_error": null,
+    "displayed_response": "נעים להכיר, ליעד. איך אפשר לעזור?"
+  },
+  {
+    "entry_id": "95961543-44ea-4523-86a2-1f1af505bd32",
+    "timestamp": "2026-11-16T16:10:57",
+    "session_id": "b8c10397361f",
     "turn_index": 3,
-    "scenario_id": null,
-    "user_message": "רואים לי ליעד",
+    "question": "מה השם שלי",
+    "actor_model": "gpt-5.4-mini",
+    "critic_model": "gpt-5.4-mini",
     "status": "APPROVED",
-    "final_response": "[{'text': 'לא לגמרי ברור לי למה התכוונת ב“רואים לי ליעד”. אם תרצה, תוכל לנסח מחדש או לכתוב מה בדיוק אתה רוצה לדעת, ואני אענה בשמחה.', 'type': 'text'}]",
-    "attempts": [
-      {
-        "attempt_number": 1,
-        "candidate_response": "[{'text': 'לא לגמרי ברור לי למה התכוונת ב“רואים לי ליעד”. אם תרצה, תוכל לנסח מחדש או לכתוב מה בדיוק אתה רוצה לדעת, ואני אענה בשמחה.', 'type': 'text'}]",
-        "is_acceptable": true,
-        "feedback": null
-      }
-    ]
+    "candidate_response": "השם שלך הוא ליעד.",
+    "evaluation_completed": true,
+    "evaluation": {
+      "is_acceptable": true,
+      "feedback": "התשובה נתמכת בהיסטוריית השיחה: המשתמש כתב 'קוראים לי ליעד', ולכן מותר להשיב שהשם הוא ליעד. התשובה עונה ישירות על השאלה, קצרה וברורה."
+    },
+    "technical_error": null,
+    "displayed_response": "השם שלך הוא ליעד."
   },
   {
-    "entry_id": "6ce37b51-487f-4c8f-a90c-8e2cb2f4995e",
-    "timestamp": "2026-11-15T17:49:39.024450",
-    "session_id": "default_session",
+    "entry_id": "e590deea-f9dc-40c3-bef2-72a0a8a0f747",
+    "timestamp": "2026-11-16T16:11:48",
+    "session_id": "b8c10397361f",
     "turn_index": 4,
-    "scenario_id": null,
-    "user_message": "קוראים לי ליעד",
+    "question": "מה המזג האוויר בספרד",
+    "actor_model": "gpt-5.4-mini",
+    "critic_model": "gpt-5.4-mini",
     "status": "APPROVED",
-    "final_response": "[{'text': 'נעים להכיר, ליעד. איך אפשר לעזור?', 'type': 'text'}]",
-    "attempts": [
-      {
-        "attempt_number": 1,
-        "candidate_response": "[{'text': 'נעים להכיר, ליעד. איך אפשר לעזור?', 'type': 'text'}]",
-        "is_acceptable": true,
-        "feedback": null
-      }
-    ]
+    "candidate_response": "אני לא מחובר כרגע לנתוני מזג אוויר בזמן אמת, ולכן אין לי יכולת לדעת מה מזג האוויר בספרד עכשיו. אם תרצה, אני יכול לעזור לך לנסח חיפוש מדויק לפי עיר מסוימת בספרד.",
+    "evaluation_completed": true,
+    "evaluation": {
+      "is_acceptable": true,
+      "feedback": "התשובה תקינה: היא מבהירה שאין לי גישה לנתוני מזג אוויר בזמן אמת ואינה ממציאה עובדות. היא גם עונה ישירות לשאלה ומציעה עזרה רלוונטית לפי עיר בספרד."
+    },
+    "technical_error": null,
+    "displayed_response": "אני לא מחובר כרגע לנתוני מזג אוויר בזמן אמת, ולכן אין לי יכולת לדעת מה מזג האוויר בספרד עכשיו. אם תרצה, אני יכול לעזור לך לנסח חיפוש מדויק לפי עיר מסוימת בספרד."
   },
   {
-    "entry_id": "b199d117-b90b-49cd-a1ab-5b4afaf421b6",
-    "timestamp": "2026-11-15T17:49:43.675532",
-    "session_id": "default_session",
-    "turn_index": 5,
-    "scenario_id": null,
-    "user_message": " קוראים לי",
-    "status": "APPROVED",
-    "final_response": "נעים להכיר — איך קוראים לך?",
-    "attempts": [
-      {
-        "attempt_number": 1,
-        "candidate_response": "נעים להכיר — איך קוראים לך?",
-        "is_acceptable": true,
-        "feedback": null
-      }
-    ]
-  },
-  {
-    "entry_id": "37a216a2-a13e-4fc8-b793-ea78a953ae44",
-    "timestamp": "2026-11-15T17:49:52.433972",
-    "session_id": "default_session",
-    "turn_index": 6,
-    "scenario_id": null,
-    "user_message": "ליעד",
-    "status": "APPROVED",
-    "final_response": "נעים להכיר, ליעד. איך אפשר לעזור?",
-    "attempts": [
-      {
-        "attempt_number": 1,
-        "candidate_response": "נעים להכיר, ליעד. איך אפשר לעזור?",
-        "is_acceptable": true,
-        "feedback": null
-      }
-    ]
-  },
-  {
-    "entry_id": "b73f4e17-873f-48d7-b371-5f5da6968423",
-    "timestamp": "2026-11-15T17:49:58.856858",
-    "session_id": "default_session",
-    "turn_index": 7,
-    "scenario_id": null,
-    "user_message": "איך קוראים לי?",
-    "status": "APPROVED",
-    "final_response": "קוראים לך ליעד.",
-    "attempts": [
-      {
-        "attempt_number": 1,
-        "candidate_response": "קוראים לך ליעד.",
-        "is_acceptable": true,
-        "feedback": null
-      }
-    ]
-  },
-  {
-    "entry_id": "4c9e5dcf-ad28-4167-9248-bc43a0833edf",
-    "timestamp": "2026-11-15T17:53:30.068331",
-    "session_id": "mock_session",
-    "turn_index": 2,
-    "scenario_id": null,
-    "user_message": "ספר לי על התואר השני שלך",
-    "status": "APPROVED",
-    "final_response": "סיימתי תואר שני במדעי המחשב בטכניון.",
-    "attempts": [
-      {
-        "attempt_number": 1,
-        "candidate_response": "סיימתי תואר שני במדעי המחשב בטכניון.",
-        "is_acceptable": true,
-        "feedback": null
-      }
-    ]
-  },
-  {
-    "entry_id": "9b1bb619-9db9-4be2-8749-750481dcbbe4",
-    "timestamp": "2026-11-15T17:56:43.309718",
-    "session_id": "mock_session",
-    "turn_index": 2,
-    "scenario_id": null,
-    "user_message": "ספר לי על התואר השני שלך",
-    "status": "APPROVED",
-    "final_response": "סיימתי תואר שני במדעי המחשב בטכניון.",
-    "attempts": [
-      {
-        "attempt_number": 1,
-        "candidate_response": "סיימתי תואר שני במדעי המחשב בטכניון.",
-        "is_acceptable": true,
-        "feedback": null
-      }
-    ]
-  },
-  {
-    "entry_id": "b4b8f77d-8861-4d1d-bbd7-35629afd6a28",
-    "timestamp": "2026-11-15T18:01:50.280749",
-    "session_id": "default_session",
+    "entry_id": "6bc46134-b0d5-4249-a2d4-a993aa47d1fd",
+    "timestamp": "2026-11-16T16:13:58",
+    "session_id": "live-tests",
     "turn_index": 1,
-    "scenario_id": null,
-    "user_message": "מה הניסיון שלך בפיתוח ארכיטקטורות RAG בחברת TechNova?",
-    "status": "APPROVED",
-    "final_response": "בחברת TechNova Solutions אני מוביל את תחום מודלי השפה והסוכנים האוטונומיים, ובמסגרת הזו פיתחתי והקמתי ארכיטקטורת RAG מתקדמת לשירות ענן.\n\nבפועל, העבודה שלי כללה:\n- תכנון וארכיטקטורה של שכבת האחזור וההפקה\n- שילוב של מסדי נתונים וקטוריים כמו Milvus ו-Pinecone\n- מימוש Hybrid Search ו-Reranking\n- אופטימיזציה של זמני אחזור ואמינות התשובות\n\nלפי הסיכום המקצועי שלי, הארכיטקטורה הזו הפחיתה את זמני האחזור ב-40% ושיפרה את דיוק/אמינות התשובות ב-25%.\n\nאם תרצה, אני יכול גם לפרט על הסטאק הטכני או על האתגרים שפתרתי שם.",
-    "attempts": [
-      {
-        "attempt_number": 1,
-        "candidate_response": "בחברת TechNova Solutions אני מוביל את תחום מודלי השפה והסוכנים האוטונומיים, ובמסגרת הזו פיתחתי והקמתי ארכיטקטורת RAG מתקדמת לשירות ענן.\n\nבפועל, העבודה שלי כללה:\n- תכנון וארכיטקטורה של שכבת האחזור וההפקה\n- שילוב של מסדי נתונים וקטוריים כמו Milvus ו-Pinecone\n- מימוש Hybrid Search ו-Reranking\n- אופטימיזציה של זמני אחזור ואמינות התשובות\n\nלפי הסיכום המקצועי שלי, הארכיטקטורה הזו הפחיתה את זמני האחזור ב-40% ושיפרה את דיוק/אמינות התשובות ב-25%.\n\nאם תרצה, אני יכול גם לפרט על הסטאק הטכני או על האתגרים שפתרתי שם.",
-        "is_acceptable": true,
-        "feedback": null
-      }
-    ]
+    "question": "באיזה מוסד עשית את התואר השני שלך?",
+    "actor_model": "gpt-5.4-mini",
+    "critic_model": "gpt-5.4-mini",
+    "status": "REJECTED",
+    "candidate_response": "אני עשיתי את התואר השני שלי במדעי המחשב, בהתמחות בבינה מלאכותית, בטכניון - מכון טכנולוגי לישראל.",
+    "evaluation_completed": true,
+    "evaluation": {
+      "is_acceptable": false,
+      "feedback": "התשובה ממציאה פרטים שלא מופיעים במקורות: לא מצוין שסוג התואר השני הוא במדעי המחשב דווקא כ”תחום” מופרד בשאלה (אם כי זה כן קיים במקורות), אבל הבעיה המרכזית היא שנוסח התשובה לא עונה במדויק על השאלה על המוסד בלבד ומוסיף פרטי התמחות מיותרים. עם זאת, אם נשפוט לפי הבסיס, המוסד עצמו נכון: הטכניון - מכון טכנולוגי לישראל. כדי לתקן, ענה ישירות ותמציתית: „עשיתי את התואר השני בטכניון - מכון טכנולוגי לישראל.”"
+    },
+    "technical_error": null,
+    "displayed_response": null
   },
   {
-    "entry_id": "e5aedc5b-1a17-4f03-9bd6-149c3958eaa4",
-    "timestamp": "2026-11-15T18:01:50.712010",
-    "session_id": "default_session",
+    "entry_id": "11e58380-964b-49c2-b8d2-591a0f2cb1eb",
+    "timestamp": "2026-11-16T16:14:02",
+    "session_id": "live-tests",
     "turn_index": 1,
-    "scenario_id": null,
-    "user_message": "מהם התחביבים ותחומי העניין שלך בשעות הפנאי?",
+    "question": "מה הציון שלך בבחינה הפסיכומטרית?",
+    "actor_model": "gpt-5.4-mini",
+    "critic_model": "gpt-5.4-mini",
     "status": "APPROVED",
-    "final_response": "בשעות הפנאי שלי אני אוהב:\n\n- לרוץ לאורך הטיילת של תל אביב, ואני גם רץ מרתון חובב שהשלים את מרתון תל אביב.\n- לקרוא מאמרים חדשים ב-ArXiv, בעיקר בתחומי AI ומודלי שפה.\n- לבשל ארוחות איטלקיות לחברים ולבני משפחה.\n\nאם תרצה, אני יכול גם לספר איך התחביבים האלה מתחברים לעבודה המקצועית שלי.",
-    "attempts": [
-      {
-        "attempt_number": 1,
-        "candidate_response": "בשעות הפנאי שלי אני אוהב:\n\n- לרוץ לאורך הטיילת של תל אביב, ואני גם רץ מרתון חובב שהשלים את מרתון תל אביב.\n- לקרוא מאמרים חדשים ב-ArXiv, בעיקר בתחומי AI ומודלי שפה.\n- לבשל ארוחות איטלקיות לחברים ולבני משפחה.\n\nאם תרצה, אני יכול גם לספר איך התחביבים האלה מתחברים לעבודה המקצועית שלי.",
-        "is_acceptable": true,
-        "feedback": null
-      }
-    ]
+    "candidate_response": "הציון שלי בבחינה הפסיכומטרית לא מופיע במקורות המידע שלי. אם תרצה, אני יכול לענות על שאלות לגבי ההשכלה, הניסיון התעסוקתי, המיומנויות או הפרויקטים שלי.",
+    "evaluation_completed": true,
+    "evaluation": {
+      "is_acceptable": true,
+      "feedback": "התשובה תקינה: היא לא ממציאה ציון פסיכומטרי, ומבהירה שהמידע אינו מופיע במקורות. בנוסף, היא נשארת ממוקדת בפרטים שכן מופיעים בפרופיל כמו השכלה, ניסיון, מיומנויות ופרויקטים."
+    },
+    "technical_error": null,
+    "displayed_response": "הציון שלי בבחינה הפסיכומטרית לא מופיע במקורות המידע שלי. אם תרצה, אני יכול לענות על שאלות לגבי ההשכלה, הניסיון התעסוקתי, המיומנויות או הפרויקטים שלי."
   },
   {
-    "entry_id": "081fea2d-e43e-44b1-a293-d7827f152576",
-    "timestamp": "2026-11-15T18:01:55.014001",
-    "session_id": "default_session",
+    "entry_id": "45f0d2fa-444a-4764-bb2c-3638d91a7787",
+    "timestamp": "2026-11-16T16:14:06",
+    "session_id": "live-tests",
+    "turn_index": 1,
+    "question": "מה מזג האוויר בספרד?",
+    "actor_model": "gpt-5.4-mini",
+    "critic_model": "gpt-5.4-mini",
+    "status": "APPROVED",
+    "candidate_response": "אני עונה רק על שאלות לגבי הרקע של אלון ברק — למשל השכלה, ניסיון תעסוקתי, מיומנויות או פרויקטים.",
+    "evaluation_completed": true,
+    "evaluation": {
+      "is_acceptable": true,
+      "feedback": "התשובה תקינה: היא מסרבת בנימוס לענות על שאלה שאינה קשורה לרקע של אלון ברק, בהתאם להנחיות. אין בה עובדות לא מבוססות והיא מתאימה לסגנון המבוקש."
+    },
+    "technical_error": null,
+    "displayed_response": "אני עונה רק על שאלות לגבי הרקע של אלון ברק — למשל השכלה, ניסיון תעסוקתי, מיומנויות או פרויקטים."
+  },
+  {
+    "entry_id": "36066332-1cae-4ec3-a992-2001b9247ee4",
+    "timestamp": "2026-11-16T16:14:30",
+    "session_id": "live-tests",
+    "turn_index": 1,
+    "question": "באיזה מוסד עשית את התואר השני שלך?",
+    "actor_model": "gpt-5.4-mini",
+    "critic_model": "gpt-5.4-mini",
+    "status": "REJECTED",
+    "candidate_response": "את התואר השני שלי עשיתי בטכניון – מכון טכנולוגי לישראל, במדעי המחשב עם התמחות בבינה מלאכותית.",
+    "evaluation_completed": true,
+    "evaluation": {
+      "is_acceptable": false,
+      "feedback": "התשובה אינה מדויקת למקורות: במקורות מצוין רק שהתואר השני נעשה בטכניון – מכון טכנולוגי לישראל, אך לא מופיע פירוט על התמחות 'בבינה מלאכותית' במסגרת השאלה הספציפית הזו. בנוסף, אם רוצים לדייק למה שנשאל, צריך להשיב רק על המוסד שבו נעשה התואר השני. תיקון מוצע: 'את התואר השני שלי עשיתי בטכניון – מכון טכנולוגי לישראל.'"
+    },
+    "technical_error": null,
+    "displayed_response": null
+  },
+  {
+    "entry_id": "3d20c660-d7f6-4ebc-b2b0-4de85ae030d8",
+    "timestamp": "2026-11-16T16:14:33",
+    "session_id": "live-tests",
+    "turn_index": 1,
+    "question": "מה הציון שלך בבחינה הפסיכומטרית?",
+    "actor_model": "gpt-5.4-mini",
+    "critic_model": "gpt-5.4-mini",
+    "status": "APPROVED",
+    "candidate_response": "הציון הפסיכומטרי שלי לא מופיע במקורות המידע שלי, ולכן אני לא יכול לציין אותו.",
+    "evaluation_completed": true,
+    "evaluation": {
+      "is_acceptable": true,
+      "feedback": "התשובה תקינה: היא אינה ממציאה ציון פסיכומטרי, אלא מציינת במפורש שהמידע לא מופיע במקורות. זה עונה נכון לשאלה בהתאם למידע הזמין."
+    },
+    "technical_error": null,
+    "displayed_response": "הציון הפסיכומטרי שלי לא מופיע במקורות המידע שלי, ולכן אני לא יכול לציין אותו."
+  },
+  {
+    "entry_id": "ba6574e7-a53b-44a3-9a19-307cd59fa48a",
+    "timestamp": "2026-11-16T16:14:37",
+    "session_id": "live-tests",
+    "turn_index": 1,
+    "question": "מה מזג האוויר בספרד?",
+    "actor_model": "gpt-5.4-mini",
+    "critic_model": "gpt-5.4-mini",
+    "status": "APPROVED",
+    "candidate_response": "אני עונה רק על שאלות לגבי הרקע שלי, כמו ההשכלה, הניסיון, המיומנויות או הפרויקטים שלי.",
+    "evaluation_completed": true,
+    "evaluation": {
+      "is_acceptable": true,
+      "feedback": "התשובה תקינה: היא מסרבת בנימוס לשאלה שאינה קשורה לרקע של אלון ברק, משתמשת בגוף ראשון ובמשפט אחד, ומתאימה להנחיות."
+    },
+    "technical_error": null,
+    "displayed_response": "אני עונה רק על שאלות לגבי הרקע שלי, כמו ההשכלה, הניסיון, המיומנויות או הפרויקטים שלי."
+  },
+  {
+    "entry_id": "3ae27876-fc79-428c-adbb-8914b5b54e64",
+    "timestamp": "2026-11-16T16:14:44",
+    "session_id": "live-tests",
+    "turn_index": 1,
+    "question": "באיזה מוסד עשית את התואר השני שלך?",
+    "actor_model": "gpt-5.4-mini",
+    "critic_model": "gpt-5.4-mini",
+    "status": "REJECTED",
+    "candidate_response": "עשיתי את התואר השני שלי במדעי המחשב בטכניון – מכון טכנולוגי לישראל.",
+    "evaluation_completed": true,
+    "evaluation": {
+      "is_acceptable": false,
+      "feedback": "בתשובה נטען שהתואר השני נעשה ב'מדעי המחשב בטכניון', וזה אכן תואם למקורות, אבל לא מופיעה במקורות תשובה מדויקת מספיק לשאלה 'באיזה מוסד עשית את התואר השני שלך?'—נדרשת התייחסות ישירה למוסד בלבד. בנוסף, בניסוח הוספת גם את תחום התואר, שאמנם נכון אך מיותר לשאלה. יש לתקן לתשובה קצרה וישירה כמו: 'עשיתי את התואר השני שלי בטכניון – מכון טכנולוגי לישראל.'"
+    },
+    "technical_error": null,
+    "displayed_response": null
+  },
+  {
+    "entry_id": "94000ae1-b494-4b91-994e-4e253f5ac02c",
+    "timestamp": "2026-11-16T16:14:47",
+    "session_id": "live-tests",
+    "turn_index": 1,
+    "question": "מה הציון שלך בבחינה הפסיכומטרית?",
+    "actor_model": "gpt-5.4-mini",
+    "critic_model": "gpt-5.4-mini",
+    "status": "APPROVED",
+    "candidate_response": "הציון הפסיכומטרי שלי לא מופיע במקורות המידע שלי, ולכן אני לא יכול לציין אותו.",
+    "evaluation_completed": true,
+    "evaluation": {
+      "is_acceptable": true,
+      "feedback": "התשובה תקינה: היא מציינת במפורש שהציון הפסיכומטרי לא מופיע במקורות, ולכן אינה ממציאה מידע. היא עונה ישירות לשאלה בהתאם להנחיות לטיפול במידע חסר."
+    },
+    "technical_error": null,
+    "displayed_response": "הציון הפסיכומטרי שלי לא מופיע במקורות המידע שלי, ולכן אני לא יכול לציין אותו."
+  },
+  {
+    "entry_id": "6381227a-7c5a-4bd9-a7c0-c54253b56436",
+    "timestamp": "2026-11-16T16:14:50",
+    "session_id": "live-tests",
+    "turn_index": 1,
+    "question": "מה מזג האוויר בספרד?",
+    "actor_model": "gpt-5.4-mini",
+    "critic_model": "gpt-5.4-mini",
+    "status": "APPROVED",
+    "candidate_response": "אני עונה רק על שאלות לגבי הרקע שלי, כמו השכלה, ניסיון, מיומנויות או פרויקטים. אפשר לשאול אותי עליהם.",
+    "evaluation_completed": true,
+    "evaluation": {
+      "is_acceptable": true,
+      "feedback": "התשובה תקינה: היא מסרבת בנימוס לשאלה שאינה קשורה לרקע של אלון ברק, נשארת בעברית ובגוף ראשון, ואינה מוסיפה מידע לא מבוסס על הפרופיל."
+    },
+    "technical_error": null,
+    "displayed_response": "אני עונה רק על שאלות לגבי הרקע שלי, כמו השכלה, ניסיון, מיומנויות או פרויקטים. אפשר לשאול אותי עליהם."
+  },
+  {
+    "entry_id": "b4bd7274-8dff-40f9-815f-873da3311f64",
+    "timestamp": "2026-11-16T16:15:10",
+    "session_id": "live-tests",
+    "turn_index": 1,
+    "question": "באיזה מוסד עשית את התואר השני שלך?",
+    "actor_model": "gpt-5.4-mini",
+    "critic_model": "gpt-5.4-mini",
+    "status": "APPROVED",
+    "candidate_response": "את התואר השני שלי עשיתי בטכניון – מכון טכנולוגי לישראל.",
+    "evaluation_completed": true,
+    "evaluation": {
+      "is_acceptable": true,
+      "feedback": "התשובה נתמכת במקורות: במקורות מצוין שהתואר השני נעשה בטכניון – מכון טכנולוגי לישראל, והיא עונה ישירות על שאלת המשתמש."
+    },
+    "technical_error": null,
+    "displayed_response": "את התואר השני שלי עשיתי בטכניון – מכון טכנולוגי לישראל."
+  },
+  {
+    "entry_id": "e36d788c-6358-4c79-b72c-745c8071e8a9",
+    "timestamp": "2026-11-16T16:15:12",
+    "session_id": "live-tests",
     "turn_index": 2,
-    "scenario_id": null,
-    "user_message": "מה הציון שלך בבחינה הפסיכומטרית?",
+    "question": "ובאיזה ממוצע סיימת אותו?",
+    "actor_model": "gpt-5.4-mini",
+    "critic_model": "gpt-5.4-mini",
     "status": "APPROVED",
-    "final_response": "אין לי מידע על ציון פסיכומטרי במקורות שסופקו לי, ולכן אני לא יכול לציין ציון כזה. אם תרצה, אני כן יכול לספר על ההשכלה האקדמית שלי ועל ההישגים הלימודיים שמופיעים בפרופיל.",
-    "attempts": [
-      {
-        "attempt_number": 1,
-        "candidate_response": "אין לי מידע על ציון פסיכומטרי במקורות שסופקו לי, ולכן אני לא יכול לציין ציון כזה. אם תרצה, אני כן יכול לספר על ההשכלה האקדמית שלי ועל ההישגים הלימודיים שמופיעים בפרופיל.",
-        "is_acceptable": true,
-        "feedback": null
-      }
-    ]
+    "candidate_response": "סיימתי את התואר השני שלי בממוצע 94.",
+    "evaluation_completed": true,
+    "evaluation": {
+      "is_acceptable": true,
+      "feedback": "התשובה נתמכת במקורות: במקור מצוין שממוצע הציונים בתואר השני בטכניון הוא 94, והיא עונה ישירות על השאלה בגוף ראשון ובעברית."
+    },
+    "technical_error": null,
+    "displayed_response": "סיימתי את התואר השני שלי בממוצע 94."
   },
   {
-    "entry_id": "84205f2d-39da-4c3d-a5c0-7a1588f91ec2",
-    "timestamp": "2026-11-15T18:02:01.877726",
-    "session_id": "default_session",
-    "turn_index": 3,
-    "scenario_id": null,
-    "user_message": "באילו טכנולוגיות השתמשת בפרויקט DocuSense AI ומה היו תוצאותיו?",
+    "entry_id": "eb91bfae-2ac1-4dd5-af2a-797a523d285b",
+    "timestamp": "2026-11-16T16:15:15",
+    "session_id": "live-tests",
+    "turn_index": 1,
+    "question": "מה הציון שלך בבחינה הפסיכומטרית?",
+    "actor_model": "gpt-5.4-mini",
+    "critic_model": "gpt-5.4-mini",
     "status": "APPROVED",
-    "final_response": "בפרויקט **DocuSense AI** השתמשתי בטכנולוגיות הבאות:\n\n- **Python**\n- **LangChain**\n- **OpenAI API**\n- **Milvus**\n- **FastAPI**\n- **Docker**\n- **Next.js**\n\nמבחינת התוצאות, המערכת:\n\n- **קיצרה את זמן איתור המידע הממוצע מ-45 דקות ל-30 שניות**\n- **הוטמעה בהצלחה אצל מעל 500 עובדי חברה פעילים**\n\nאם תרצה, אני יכול גם לפרט מה הייתה המטרה של הפרויקט ואיזה אתגר הוא פתר.",
-    "attempts": [
-      {
-        "attempt_number": 1,
-        "candidate_response": "בפרויקט **DocuSense AI** השתמשתי בטכנולוגיות הבאות:\n\n- **Python**\n- **LangChain**\n- **OpenAI API**\n- **Milvus**\n- **FastAPI**\n- **Docker**\n- **Next.js**\n\nמבחינת התוצאות, המערכת:\n\n- **קיצרה את זמן איתור המידע הממוצע מ-45 דקות ל-30 שניות**\n- **הוטמעה בהצלחה אצל מעל 500 עובדי חברה פעילים**\n\nאם תרצה, אני יכול גם לפרט מה הייתה המטרה של הפרויקט ואיזה אתגר הוא פתר.",
-        "is_acceptable": true,
-        "feedback": null
-      }
-    ]
+    "candidate_response": "הציון שלי בבחינה הפסיכומטרית לא מופיע במקורות המידע שלי, ולכן אין לי אפשרות לציין אותו.",
+    "evaluation_completed": true,
+    "evaluation": {
+      "is_acceptable": true,
+      "feedback": "התשובה תקינה: היא מציינת במפורש שהציון הפסיכומטרי אינו מופיע במקורות, וזה תואם לכך שאין מידע כזה בפרופיל שסופק. היא גם עונה ישירות לשאלה בעברית ובגוף ראשון."
+    },
+    "technical_error": null,
+    "displayed_response": "הציון שלי בבחינה הפסיכומטרית לא מופיע במקורות המידע שלי, ולכן אין לי אפשרות לציין אותו."
+  },
+  {
+    "entry_id": "08f0cc55-69d5-478a-89b2-229842ce6a69",
+    "timestamp": "2026-11-16T16:15:19",
+    "session_id": "live-tests",
+    "turn_index": 1,
+    "question": "מה מזג האוויר בספרד?",
+    "actor_model": "gpt-5.4-mini",
+    "critic_model": "gpt-5.4-mini",
+    "status": "APPROVED",
+    "candidate_response": "אני עונה רק על שאלות לגבי הרקע שלי, ההשכלה, הניסיון, המיומנויות או הפרויקטים שלי. אם תרצה, אפשר לשאול אותי עליהם.",
+    "evaluation_completed": true,
+    "evaluation": {
+      "is_acceptable": true,
+      "feedback": "התשובה תקינה: היא מסרבת כנדרש לשאלה שאינה קשורה לרקע של אלון ברק, בעברית ובגוף ראשון, מבלי להמציא מידע או לחרוג מההנחיות."
+    },
+    "technical_error": null,
+    "displayed_response": "אני עונה רק על שאלות לגבי הרקע שלי, ההשכלה, הניסיון, המיומנויות או הפרויקטים שלי. אם תרצה, אפשר לשאול אותי עליהם."
+  },
+  {
+    "entry_id": "65310130-beb1-48f9-b26e-375df0abe4d6",
+    "timestamp": "2026-11-16T16:15:26",
+    "session_id": "live-tests",
+    "turn_index": 1,
+    "question": "באיזה מוסד עשית את התואר השני שלך?",
+    "actor_model": "gpt-5.4-mini",
+    "critic_model": "gpt-5.4-mini",
+    "status": "APPROVED",
+    "candidate_response": "את התואר השני שלי עשיתי בטכניון – מכון טכנולוגי לישראל.",
+    "evaluation_completed": true,
+    "evaluation": {
+      "is_acceptable": true,
+      "feedback": "התשובה נתמכת במקורות: במקורות מצוין שהתואר השני נעשה בטכניון – מכון טכנולוגי לישראל. התשובה עונה ישירות על השאלה ובגוף ראשון בעברית."
+    },
+    "technical_error": null,
+    "displayed_response": "את התואר השני שלי עשיתי בטכניון – מכון טכנולוגי לישראל."
+  },
+  {
+    "entry_id": "c6f9fb4f-4b20-46fc-b58f-91fde1007e66",
+    "timestamp": "2026-11-16T16:15:28",
+    "session_id": "live-tests",
+    "turn_index": 2,
+    "question": "ובאיזה ממוצע סיימת אותו?",
+    "actor_model": "gpt-5.4-mini",
+    "critic_model": "gpt-5.4-mini",
+    "status": "APPROVED",
+    "candidate_response": "סיימתי את התואר השני שלי בממוצע 94.",
+    "evaluation_completed": true,
+    "evaluation": {
+      "is_acceptable": true,
+      "feedback": "העובדה על ממוצע 94 נתמכת במפורש במקורות, והתשובה עונה ישירות לשאלה שנשאלה על סיום התואר השני."
+    },
+    "technical_error": null,
+    "displayed_response": "סיימתי את התואר השני שלי בממוצע 94."
+  },
+  {
+    "entry_id": "cf90aeb5-12ba-4017-b1d1-c4f37dffac19",
+    "timestamp": "2026-11-16T16:15:30",
+    "session_id": "live-tests",
+    "turn_index": 1,
+    "question": "מה הציון שלך בבחינה הפסיכומטרית?",
+    "actor_model": "gpt-5.4-mini",
+    "critic_model": "gpt-5.4-mini",
+    "status": "APPROVED",
+    "candidate_response": "הציון הפסיכומטרי שלי לא מופיע במקורות המידע שלי.",
+    "evaluation_completed": true,
+    "evaluation": {
+      "is_acceptable": true,
+      "feedback": "התגובה תקינה: היא מציינת במפורש שהציון הפסיכומטרי אינו מופיע במקורות, וזה תואם למידע שסופק. אין בה טענה מומצאת והיא עונה נכון לשאלת המידע החסר."
+    },
+    "technical_error": null,
+    "displayed_response": "הציון הפסיכומטרי שלי לא מופיע במקורות המידע שלי."
+  },
+  {
+    "entry_id": "bb952db7-bf93-4ca9-9d1b-887d860844cf",
+    "timestamp": "2026-11-16T16:15:35",
+    "session_id": "live-tests",
+    "turn_index": 1,
+    "question": "מה מזג האוויר בספרד?",
+    "actor_model": "gpt-5.4-mini",
+    "critic_model": "gpt-5.4-mini",
+    "status": "APPROVED",
+    "candidate_response": "אני עונה רק על שאלות לגבי הרקע שלי, כמו השכלה, ניסיון, מיומנויות או פרויקטים.",
+    "evaluation_completed": true,
+    "evaluation": {
+      "is_acceptable": true,
+      "feedback": "התשובה תקינה: היא אינה עונה על תוכן שאינו קשור לפרופיל, אלא מסרבת בנימוס בהתאם להנחיות ועוברת לשאלות על הרקע של אלון ברק. אין בה עובדות לא מבוססות."
+    },
+    "technical_error": null,
+    "displayed_response": "אני עונה רק על שאלות לגבי הרקע שלי, כמו השכלה, ניסיון, מיומנויות או פרויקטים."
+  },
+  {
+    "entry_id": "5a28f892-53d9-4f74-b0dd-77b36a052b2a",
+    "timestamp": "2026-11-16T16:15:41",
+    "session_id": "live-tests",
+    "turn_index": 1,
+    "question": "באיזה מוסד עשית את התואר השני שלך?",
+    "actor_model": "gpt-5.4-mini",
+    "critic_model": "gpt-5.4-mini",
+    "status": "APPROVED",
+    "candidate_response": "עשיתי את התואר השני שלי במדעי המחשב בטכניון – מכון טכנולוגי לישראל.",
+    "evaluation_completed": true,
+    "evaluation": {
+      "is_acceptable": true,
+      "feedback": "התשובה נתמכת במקורות: מצוין שהמוסד לתואר השני הוא הטכניון – מכון טכנולוגי לישראל, והיא עונה ישירות לשאלה."
+    },
+    "technical_error": null,
+    "displayed_response": "עשיתי את התואר השני שלי במדעי המחשב בטכניון – מכון טכנולוגי לישראל."
+  },
+  {
+    "entry_id": "33efead1-f509-444f-973e-4ecb98d29770",
+    "timestamp": "2026-11-16T16:15:43",
+    "session_id": "live-tests",
+    "turn_index": 2,
+    "question": "ובאיזה ממוצע סיימת אותו?",
+    "actor_model": "gpt-5.4-mini",
+    "critic_model": "gpt-5.4-mini",
+    "status": "APPROVED",
+    "candidate_response": "סיימתי את התואר השני שלי עם ממוצע 94.",
+    "evaluation_completed": true,
+    "evaluation": {
+      "is_acceptable": true,
+      "feedback": "התגובה נתמכת במקורות: במקורות מצוין שממוצע התואר השני בטכניון הוא 94, ולכן התשובה עונה ישירות על השאלה ותואמת את הנתונים."
+    },
+    "technical_error": null,
+    "displayed_response": "סיימתי את התואר השני שלי עם ממוצע 94."
+  },
+  {
+    "entry_id": "f611d314-6951-4020-affe-b9b6ec1b9e1d",
+    "timestamp": "2026-11-16T16:15:47",
+    "session_id": "live-tests",
+    "turn_index": 1,
+    "question": "מה הציון שלך בבחינה הפסיכומטרית?",
+    "actor_model": "gpt-5.4-mini",
+    "critic_model": "gpt-5.4-mini",
+    "status": "REJECTED",
+    "candidate_response": "הציון שלי בבחינה הפסיכומטרית לא מופיע במקורות המידע שלי. אם תרצה, אני יכול לספר על ההשכלה, הניסיון התעסוקתי, המיומנויות או הפרויקטים שלי.",
+    "evaluation_completed": true,
+    "evaluation": {
+      "is_acceptable": false,
+      "feedback": "התשובה לא מאושרת כי היא מוסיפה פנייה אופציונלית שאינה נדרשת לשאלה. לפי ההנחיות, כשאין מידע על ציון פסיכומטרי יש להשיב רק שהמידע אינו מופיע במקורות, בגוף ראשון, ללא הצעת נושאים נוספים. תיקון: השאר רק משפט קצר כמו 'הציון שלי בבחינה הפסיכומטרית לא מופיע במקורות המידע שלי.'"
+    },
+    "technical_error": null,
+    "displayed_response": null
+  },
+  {
+    "entry_id": "e99d3847-fb06-4a0c-92bd-429b63acaf19",
+    "timestamp": "2026-11-16T16:15:53",
+    "session_id": "live-tests",
+    "turn_index": 1,
+    "question": "מה מזג האוויר בספרד?",
+    "actor_model": "gpt-5.4-mini",
+    "critic_model": "gpt-5.4-mini",
+    "status": "APPROVED",
+    "candidate_response": "אני עונה רק על שאלות לגבי הרקע שלי, כמו ההשכלה, הניסיון התעסוקתי, המיומנויות או הפרויקטים שלי.",
+    "evaluation_completed": true,
+    "evaluation": {
+      "is_acceptable": true,
+      "feedback": "התשובה תקינה: היא מסרבת בנימוס לשאלה שאינה קשורה לרקע של אלון ברק, בגוף ראשון ובעברית, בהתאם להנחיות. אין בה עובדות לא מבוססות על הפרופיל."
+    },
+    "technical_error": null,
+    "displayed_response": "אני עונה רק על שאלות לגבי הרקע שלי, כמו ההשכלה, הניסיון התעסוקתי, המיומנויות או הפרויקטים שלי."
+  },
+  {
+    "entry_id": "d0962036-267b-475a-8d6b-491f76bf2a08",
+    "timestamp": "2026-11-16T16:16:14",
+    "session_id": "live-tests",
+    "turn_index": 1,
+    "question": "באיזה מוסד עשית את התואר השני שלך?",
+    "actor_model": "gpt-5.4-mini",
+    "critic_model": "gpt-5.4-mini",
+    "status": "APPROVED",
+    "candidate_response": "את התואר השני שלי עשיתי בטכניון – מכון טכנולוגי לישראל.",
+    "evaluation_completed": true,
+    "evaluation": {
+      "is_acceptable": true,
+      "feedback": "התשובה נתמכת במקורות: במקורות מצוין שהתואר השני נעשה בטכניון – מכון טכנולוגי לישראל, והיא עונה ישירות על השאלה."
+    },
+    "technical_error": null,
+    "displayed_response": "את התואר השני שלי עשיתי בטכניון – מכון טכנולוגי לישראל."
+  },
+  {
+    "entry_id": "bf00dad9-b717-4b61-8a2e-01e9f019be94",
+    "timestamp": "2026-11-16T16:16:17",
+    "session_id": "live-tests",
+    "turn_index": 2,
+    "question": "ובאיזה ממוצע סיימת אותו?",
+    "actor_model": "gpt-5.4-mini",
+    "critic_model": "gpt-5.4-mini",
+    "status": "APPROVED",
+    "candidate_response": "סיימתי את התואר השני עם ממוצע 94.",
+    "evaluation_completed": true,
+    "evaluation": {
+      "is_acceptable": true,
+      "feedback": "התשובה נתמכת במקורות: בפרופיל מצוין שממוצע הציונים בתואר השני בטכניון הוא 94. היא גם עונה ישירות לשאלה שנשאלה ובסגנון תמציתי בעברית בגוף ראשון."
+    },
+    "technical_error": null,
+    "displayed_response": "סיימתי את התואר השני עם ממוצע 94."
+  },
+  {
+    "entry_id": "1241fd7b-7b53-4761-9660-bc58cd8f970d",
+    "timestamp": "2026-11-16T16:16:20",
+    "session_id": "live-tests",
+    "turn_index": 1,
+    "question": "מה הציון שלך בבחינה הפסיכומטרית?",
+    "actor_model": "gpt-5.4-mini",
+    "critic_model": "gpt-5.4-mini",
+    "status": "APPROVED",
+    "candidate_response": "הציון שלי בבחינה הפסיכומטרית לא מופיע במקורות המידע שלי. אם תרצה, אני יכול לענות על שאלות לגבי ההשכלה, הניסיון התעסוקתי, המיומנויות או הפרויקטים שלי.",
+    "evaluation_completed": true,
+    "evaluation": {
+      "is_acceptable": true,
+      "feedback": "התשובה תקינה: היא מציינת במפורש שהציון הפסיכומטרי אינו מופיע במקורות, ובכך לא ממציאה מידע. היא גם עונה ישירות לשאלה ומציעה להמשיך לשאלות רלוונטיות על הרקע שלך."
+    },
+    "technical_error": null,
+    "displayed_response": "הציון שלי בבחינה הפסיכומטרית לא מופיע במקורות המידע שלי. אם תרצה, אני יכול לענות על שאלות לגבי ההשכלה, הניסיון התעסוקתי, המיומנויות או הפרויקטים שלי."
+  },
+  {
+    "entry_id": "c33bfdc7-0737-45ef-b92e-7f4c7163bcdf",
+    "timestamp": "2026-11-16T16:16:24",
+    "session_id": "live-tests",
+    "turn_index": 1,
+    "question": "מה מזג האוויר בספרד?",
+    "actor_model": "gpt-5.4-mini",
+    "critic_model": "gpt-5.4-mini",
+    "status": "APPROVED",
+    "candidate_response": "אני עונה רק על שאלות לגבי הרקע המקצועי והאישי שלי, כמו ההשכלה, הניסיון, המיומנויות והפרויקטים שלי. אפשר לשאול אותי על זה?",
+    "evaluation_completed": true,
+    "evaluation": {
+      "is_acceptable": true,
+      "feedback": "התשובה תקינה: היא מסרבת לענות על שאלה שאינה קשורה לרקע של אלון ברק, מתייחסת רק לנושאי ההשכלה/הניסיון/המיומנויות/הפרויקטים, ואינה מוסיפה עובדות לא מבוססות."
+    },
+    "technical_error": null,
+    "displayed_response": "אני עונה רק על שאלות לגבי הרקע המקצועי והאישי שלי, כמו ההשכלה, הניסיון, המיומנויות והפרויקטים שלי. אפשר לשאול אותי על זה?"
+  },
+  {
+    "entry_id": "7f8a8a98-9c6d-44df-a8ca-acc44f7f5a05",
+    "timestamp": "2026-11-16T16:16:31",
+    "session_id": "live-tests",
+    "turn_index": 1,
+    "question": "באיזה מוסד עשית את התואר השני שלך?",
+    "actor_model": "gpt-5.4-mini",
+    "critic_model": "gpt-5.4-mini",
+    "status": "REJECTED",
+    "candidate_response": "עשיתי את התואר השני שלי במדעי המחשב בטכניון – מכון טכנולוגי לישראל.",
+    "evaluation_completed": true,
+    "evaluation": {
+      "is_acceptable": false,
+      "feedback": "התשובה מבוססת חלקית על המקורות אך כוללת הומצאה/אי-דיוק: במקורות מצוין רק שהתואר השני הוא במדעי המחשב בטכניון – מכון טכנולוגי לישראל, ולא מפורט שם שזו בדיוק התשובה בניסוח הזה (ללא בעיה), אך השאלה מבקשת את המוסד בלבד ולכן יש לענות בצורה ישירה ותמציתית: \"עשיתי את התואר השני שלי בטכניון – מכון טכנולוגי לישראל.\""
+    },
+    "technical_error": null,
+    "displayed_response": null
+  },
+  {
+    "entry_id": "3c90e91e-7374-4c4d-9d64-3cf72ef961c9",
+    "timestamp": "2026-11-16T16:16:34",
+    "session_id": "live-tests",
+    "turn_index": 1,
+    "question": "מה הציון שלך בבחינה הפסיכומטרית?",
+    "actor_model": "gpt-5.4-mini",
+    "critic_model": "gpt-5.4-mini",
+    "status": "APPROVED",
+    "candidate_response": "הציון שלי בבחינה הפסיכומטרית לא מופיע במקורות המידע שלי. אם תרצה, אפשר לשאול אותי על ההשכלה, הניסיון התעסוקתי, המיומנויות או הפרויקטים שלי.",
+    "evaluation_completed": true,
+    "evaluation": {
+      "is_acceptable": true,
+      "feedback": "התשובה תקינה: היא מציינת במפורש שהציון הפסיכומטרי לא מופיע במקורות, בהתאם לכך שאין מידע כזה בפרופיל, ועונה בעברית ובגוף ראשון תוך הפניה לשאלות רלוונטיות על הרקע."
+    },
+    "technical_error": null,
+    "displayed_response": "הציון שלי בבחינה הפסיכומטרית לא מופיע במקורות המידע שלי. אם תרצה, אפשר לשאול אותי על ההשכלה, הניסיון התעסוקתי, המיומנויות או הפרויקטים שלי."
+  },
+  {
+    "entry_id": "e0b1121d-0099-4bc9-9fc3-e48ed06b25d1",
+    "timestamp": "2026-11-16T16:16:37",
+    "session_id": "live-tests",
+    "turn_index": 1,
+    "question": "מה מזג האוויר בספרד?",
+    "actor_model": "gpt-5.4-mini",
+    "critic_model": "gpt-5.4-mini",
+    "status": "APPROVED",
+    "candidate_response": "אני עונה רק על שאלות לגבי הרקע שלי, כמו ההשכלה, הניסיון, המיומנויות או הפרויקטים שלי.",
+    "evaluation_completed": true,
+    "evaluation": {
+      "is_acceptable": true,
+      "feedback": "התשובה תקינה: היא מסרבת בנימוס לשאלה שאינה קשורה לרקע של אלון ברק, תואמת להנחיות בגוף ראשון ובעברית, ואינה מוסיפה עובדות לא מבוססות."
+    },
+    "technical_error": null,
+    "displayed_response": "אני עונה רק על שאלות לגבי הרקע שלי, כמו ההשכלה, הניסיון, המיומנויות או הפרויקטים שלי."
+  },
+  {
+    "entry_id": "765715d9-c71b-4d97-addf-93bce148e120",
+    "timestamp": "2026-11-16T16:16:44",
+    "session_id": "live-tests",
+    "turn_index": 1,
+    "question": "באיזה מוסד עשית את התואר השני שלך?",
+    "actor_model": "gpt-5.4-mini",
+    "critic_model": "gpt-5.4-mini",
+    "status": "APPROVED",
+    "candidate_response": "את התואר השני שלי עשיתי בטכניון – מכון טכנולוגי לישראל.",
+    "evaluation_completed": true,
+    "evaluation": {
+      "is_acceptable": true,
+      "feedback": "התשובה נתמכת במקורות: מצוין במפורש שהתואר השני נעשה בטכניון – מכון טכנולוגי לישראל, והיא עונה ישירות על שאלת המשתמש."
+    },
+    "technical_error": null,
+    "displayed_response": "את התואר השני שלי עשיתי בטכניון – מכון טכנולוגי לישראל."
+  },
+  {
+    "entry_id": "b2074900-5783-48f0-a798-a6ec085674d2",
+    "timestamp": "2026-11-16T16:16:46",
+    "session_id": "live-tests",
+    "turn_index": 2,
+    "question": "ובאיזה ממוצע סיימת אותו?",
+    "actor_model": "gpt-5.4-mini",
+    "critic_model": "gpt-5.4-mini",
+    "status": "APPROVED",
+    "candidate_response": "סיימתי את התואר השני עם ממוצע 94.",
+    "evaluation_completed": true,
+    "evaluation": {
+      "is_acceptable": true,
+      "feedback": "המענה נתמך במקורות: בפרופיל מצוין שממוצע התואר השני הוא 94. התשובה עונה ישירות על השאלה ובגוף ראשון."
+    },
+    "technical_error": null,
+    "displayed_response": "סיימתי את התואר השני עם ממוצע 94."
+  },
+  {
+    "entry_id": "2a4672fd-e934-417c-999c-1ce901cda882",
+    "timestamp": "2026-11-16T16:16:48",
+    "session_id": "live-tests",
+    "turn_index": 1,
+    "question": "מה הציון שלך בבחינה הפסיכומטרית?",
+    "actor_model": "gpt-5.4-mini",
+    "critic_model": "gpt-5.4-mini",
+    "status": "APPROVED",
+    "candidate_response": "הציון שלי בבחינה הפסיכומטרית לא מופיע במקורות המידע שלי. אם תרצה, אפשר לשאול אותי על ההשכלה, הניסיון התעסוקתי, המיומנויות או הפרויקטים שלי.",
+    "evaluation_completed": true,
+    "evaluation": {
+      "is_acceptable": true,
+      "feedback": "התשובה תקינה: היא לא ממציאה ציון פסיכומטרי, אלא מציינת במפורש שהמידע לא מופיע במקורות. בנוסף, היא עונה ישירות לשאלה ומפנה באופן מתאים לנושאים שכן מופיעים בפרופיל."
+    },
+    "technical_error": null,
+    "displayed_response": "הציון שלי בבחינה הפסיכומטרית לא מופיע במקורות המידע שלי. אם תרצה, אפשר לשאול אותי על ההשכלה, הניסיון התעסוקתי, המיומנויות או הפרויקטים שלי."
+  },
+  {
+    "entry_id": "c361a91e-6b3a-4c4f-93a1-9012ee1e6522",
+    "timestamp": "2026-11-16T16:16:53",
+    "session_id": "live-tests",
+    "turn_index": 1,
+    "question": "מה מזג האוויר בספרד?",
+    "actor_model": "gpt-5.4-mini",
+    "critic_model": "gpt-5.4-mini",
+    "status": "APPROVED",
+    "candidate_response": "אני עונה רק על שאלות לגבי הרקע המקצועי והאישי שלי, אז אשמח אם תשאל אותי על ההשכלה, הניסיון, המיומנויות או הפרויקטים שלי.",
+    "evaluation_completed": true,
+    "evaluation": {
+      "is_acceptable": true,
+      "feedback": "התשובה תקינה: היא מסרבת בנימוס לשאלה שאינה קשורה לרקע של אלון ברק, בגוף ראשון ובעברית, בהתאם להנחיות. אין בה עובדות לא מבוססות על הפרופיל."
+    },
+    "technical_error": null,
+    "displayed_response": "אני עונה רק על שאלות לגבי הרקע המקצועי והאישי שלי, אז אשמח אם תשאל אותי על ההשכלה, הניסיון, המיומנויות או הפרויקטים שלי."
+  },
+  {
+    "entry_id": "42ba11b5-78e0-4666-9ac9-0e06d977c3e6",
+    "timestamp": "2026-11-16T16:20:19",
+    "session_id": "32c895e773e6",
+    "turn_index": 1,
+    "question": "מה מזג האוויר בספר",
+    "actor_model": "gpt-5.4-mini",
+    "critic_model": "gpt-5.4-mini",
+    "status": "APPROVED",
+    "candidate_response": "אני עונה רק על שאלות לגבי הרקע שלי, ההשכלה, הניסיון, המיומנויות או הפרויקטים שלי. אפשר לשאול אותי עליהם.",
+    "evaluation_completed": true,
+    "evaluation": {
+      "is_acceptable": true,
+      "feedback": "התשובה תקינה: היא מסרבת בנימוס לשאלה שאינה קשורה לרקע של אלון ברק, ועומדת בהנחיה לענות רק על השכלה, ניסיון, מיומנויות או פרויקטים. אין בה עובדות לא מבוססות."
+    },
+    "technical_error": null,
+    "displayed_response": "אני עונה רק על שאלות לגבי הרקע שלי, ההשכלה, הניסיון, המיומנויות או הפרויקטים שלי. אפשר לשאול אותי עליהם."
+  },
+  {
+    "entry_id": "ce9f5b8d-fb2f-403a-8ab7-d5e91d43a50d",
+    "timestamp": "2026-11-16T16:20:31",
+    "session_id": "32c895e773e6",
+    "turn_index": 2,
+    "question": "מה זה באבל סורט",
+    "actor_model": "gpt-5.4-mini",
+    "critic_model": "gpt-5.4-mini",
+    "status": "REJECTED",
+    "candidate_response": "אני עונה רק על שאלות לגבי הרקע שלי, ההשכלה, הניסיון, המיומנויות או הפרויקטים שלי. אפשר לשאול אותי עליהם.",
+    "evaluation_completed": true,
+    "evaluation": {
+      "is_acceptable": false,
+      "feedback": "התשובה אינה עונה על שאלת המשתמש 'מה זה באבל סורט' אלא מסרבת באופן כללי לשאלות לא קשורות. כאן מדובר בשאלה כללית/ידע כללי, ולכן היה צריך לענות עליה, ולא להפנות רק לרקע שלך. לתיקון: להסביר בקצרה בעברית מהו Bubble Sort, למשל שהוא אלגוריתם מיון פשוט שמשווה ומחליף איברים סמוכים עד שהמערך ממוין."
+    },
+    "technical_error": null,
+    "displayed_response": null
   }
 ]

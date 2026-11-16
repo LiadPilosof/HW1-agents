@@ -1,0 +1,31 @@
+[project]
+name = "hw1-personal-chat"
+version = "0.2.0"
+description = "Assignment 1 (Parts A-B): Hebrew personal chat with an Actor and a Critic"
+requires-python = ">=3.10"
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+addopts = "-p no:cacheprovider"
+markers = ["live: calls the real model API (opt-in via RUN_LIVE_TESTS=1)"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+extend-exclude = [".venv"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "SIM"]
+
+[tool.ruff.lint.per-file-ignores]
+# Hebrew prompt text and Hebrew test fixtures read better unwrapped.
+"src/prompts.py" = ["E501"]
+"src/theme.py" = ["E501"]  # CSS inside a Python string
+"tests/*" = ["E501"]
+
+[tool.pyright]
+include = ["app.py", "src", "tests"]
+venvPath = "."
+venv = ".venv"
+pythonVersion = "3.10"

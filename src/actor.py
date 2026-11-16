@@ -1,196 +1,59 @@
-"""
-Actor Module (Response Generator).
-Handles LLM calls to generate answers grounded strictly in background sources,
-mirroring the conventions of reference notebooks.
-"""
+"""Actor (response generator): drafts a grounded answer from sources + history + question."""
 
-from typing import Any, Dict, List, Optional
+from collections.abc import Sequence
+
 from openai import OpenAI
+from openai.types.chat import ChatCompletionMessageParam
 
 from src.config import (
-    DEFAULT_MODEL_NAME,
+    ACTOR_MODEL_NAME,
     get_linkedin_profile,
     get_openai_client,
     get_personal_summary,
 )
-
-from src.logger import inspection_logger
 from src.prompts import build_system_prompt
-
-def extract_text(content: Any) -> str:
-    """
-    Extracts pure string content from various Gradio 5/6 content shapes:
-    - plain string: "שלום"
-    - list of dicts: [{'text': '...', 'type': 'text'}]
-    - dict: {'text': '...'}
-    - stringified python repr: "[{'text': '...', 'type': 'text'}]"
-    """
-    if not content:
-        return ""
-    if isinstance(content, str):
-        trimmed = content.strip()
-        if (trimmed.startswith("[{'text'") or trimmed.startswith('[{"text"')) and (trimmed.endswith("}]") or trimmed.endswith("']")):
-            try:
-                import ast
-                parsed = ast.literal_eval(trimmed)
-                if isinstance(parsed, list) and len(parsed) > 0 and isinstance(parsed[0], dict) and "text" in parsed[0]:
-                    return str(parsed[0]["text"])
-            except Exception:
-                pass
-        return content
-    elif isinstance(content, list):
-        parts = []
-        for p in content:
-            if isinstance(p, dict) and "text" in p:
-                parts.append(str(p["text"]))
-            elif isinstance(p, str):
-                parts.append(p)
-            else:
-                parts.append(str(p))
-        return "".join(parts)
-    elif isinstance(content, dict) and "text" in content:
-        return str(content["text"])
-    return str(content)
-
-
-def extract_text(content: Any) -> str:
-    """
-    Extracts pure string content from various Gradio 5/6 content shapes:
-    - plain string: "שלום"
-    - list of dicts: [{'text': '...', 'type': 'text'}]
-    - dict: {'text': '...'}
-    - stringified python repr: "[{'text': '...', 'type': 'text'}]"
-    """
-    if not content:
-        return ""
-    if isinstance(content, str):
-        trimmed = content.strip()
-        if (trimmed.startswith("[{'text'") or trimmed.startswith('[{"text"')) and (trimmed.endswith("}]") or trimmed.endswith("']")):
-            try:
-                import ast
-                parsed = ast.literal_eval(trimmed)
-                if isinstance(parsed, list) and len(parsed) > 0 and isinstance(parsed[0], dict) and "text" in parsed[0]:
-                    return str(parsed[0]["text"])
-            except Exception:
-                pass
-        return content
-    elif isinstance(content, list):
-        parts = []
-        for p in content:
-            if isinstance(p, dict) and "text" in p:
-                parts.append(str(p["text"]))
-            elif isinstance(p, str):
-                parts.append(p)
-            else:
-                parts.append(str(p))
-        return "".join(parts)
-    elif isinstance(content, dict) and "text" in content:
-        return str(content["text"])
-    return str(content)
-
-
-def normalize_history(history: Optional[List[Any]]) -> List[Dict[str, str]]:
-    """
-    Normalizes history from Gradio into standard OpenAI message dicts:
-    [{"role": "user", "content": "..."}, {"role": "assistant", "content": "..."}]
-    Supports both Gradio 'messages' format (list of dicts) and legacy pairs format (list of [u, a]).
-    """
-    if not history:
-        return []
-
-    normalized: List[Dict[str, str]] = []
-    for item in history:
-        if isinstance(item, dict):
-            role = item.get("role")
-            content = item.get("content")
-            if role in ("user", "assistant") and content is not None:
-                normalized.append({"role": role, "content": extract_text(content)})
-        elif isinstance(item, (list, tuple)) and len(item) == 2:
-            user_msg, bot_msg = item
-            if user_msg is not None:
-                normalized.append({"role": "user", "content": extract_text(user_msg)})
-            if bot_msg is not None:
-                normalized.append({"role": "assistant", "content": extract_text(bot_msg)})
-
-    return normalized
+from src.schema import ChatTurn
 
 
 class Actor:
-    """Actor class responsible for generating grounded responses."""
+    """Generates candidate responses grounded in the background sources."""
 
-    def __init__(self, client: Optional[OpenAI] = None, model: Optional[str] = None):
+    def __init__(self, client: OpenAI | None = None, model: str | None = None):
         self._client = client
-        self.model = model or DEFAULT_MODEL_NAME
+        self.model = model or ACTOR_MODEL_NAME
         self.personal_summary = get_personal_summary()
         self.linkedin_profile = get_linkedin_profile()
-        self.system_prompt = build_system_prompt(
-            personal_summary=self.personal_summary,
-            linkedin_profile=self.linkedin_profile,
-        )
+        self.system_prompt = build_system_prompt(self.personal_summary, self.linkedin_profile)
 
     @property
     def client(self) -> OpenAI:
-        """Lazy initialization of the OpenAI client if not injected."""
+        """Create the OpenAI client on first use unless one was injected."""
         if self._client is None:
             self._client = get_openai_client()
         return self._client
 
-    def generate_response(
-        self,
-        message: str,
-        history: Optional[List[Any]] = None,
-        session_id: str = "default_session",
-    ) -> str:
-        """
-        Generate candidate response for the user's message using background sources and history.
-        Exact convention from reference notebooks:
-        messages = [{"role": "system", "content": system_prompt}] + history + [{"role": "user", "content": message}]
-        """
-        formatted_history = normalize_history(history)
-        messages = (
-            [{"role": "system", "content": self.system_prompt}]
-            + formatted_history
-            + [{"role": "user", "content": message}]
-        )
+    def build_messages(
+        self, question: str, history: Sequence[ChatTurn] = ()
+    ) -> list[ChatCompletionMessageParam]:
+        """System prompt (with sources) + conversation history + the current question."""
+        messages: list[ChatCompletionMessageParam] = [
+            {"role": "system", "content": self.system_prompt}
+        ]
+        for turn in history:
+            if turn["role"] == "user":
+                messages.append({"role": "user", "content": turn["content"]})
+            else:
+                messages.append({"role": "assistant", "content": turn["content"]})
+        messages.append({"role": "user", "content": question})
+        return messages
 
+    def generate(self, question: str, history: Sequence[ChatTurn] = ()) -> str:
+        """Return the candidate response. Raises on API failure or an empty answer."""
         response = self.client.chat.completions.create(
             model=self.model,
-            messages=messages,
+            messages=self.build_messages(question, history),
         )
-
-        candidate_response = extract_text(response.choices[0].message.content or "")
-
-        # In Part A, log this turn to the inspection log
-        turn_index = (len(formatted_history) // 2) + 1
-        inspection_logger.log_turn(
-            user_message=message,
-            candidate_response=candidate_response,
-            final_response=candidate_response,
-            status="APPROVED",
-            session_id=session_id,
-            turn_index=turn_index,
-        )
-
-        return candidate_response
-
-
-_actor_instance: Optional[Actor] = None
-
-
-def get_actor() -> Actor:
-    """Returns singleton instance of Actor."""
-    global _actor_instance
-    if _actor_instance is None:
-        _actor_instance = Actor()
-    return _actor_instance
-
-
-def chat_response(message: str, history: List[Any]) -> str:
-    """Direct callable interface for Gradio chat, matching reference notebook conventions."""
-    try:
-        actor = get_actor()
-        return actor.generate_response(message, history)
-    except ValueError as e:
-        return f"שגיאת תצורה: {e}"
-    except Exception as e:
-        return f"שגיאה בהפקת התשובה מהמודל: {e}"
+        content = (response.choices[0].message.content or "").strip()
+        if not content:
+            raise ValueError("The Actor model returned an empty response.")
+        return content

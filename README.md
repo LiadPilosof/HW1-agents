@@ -1,118 +1,83 @@
-# מטלה 1: מערכות בינה מלאכותית — צ׳אט אישי עם מעריך תשובות ולולאת שיפור
-## חלק א׳ (Actor) + חלק ב׳ (Critic / Response Evaluator & Pydantic Structured Output)
+# מטלה 1: מערכות בינה מלאכותית, צ׳אט אישי עם מעריך תשובות
 
-פרויקט זה מממש את **חלק א׳** ואת **חלק ב׳** של מטלה 1 בקורס "מערכות בינה מלאכותית" (ד"ר פאול אברהמי), בהתבסס על חומר הלימוד של הרצאה 2 (שקפים 19–21) ומחברות המעבדה הנלוות (Labs 1–4).
+הפרויקט מממש את **חלק א׳** (מידע רקע ויוצר התשובה) ואת **חלק ב׳** (מעריך תשובות ופלט מובנה) של המטלה.
+לולאת התיקון (חלק ג׳) אינה ממומשת: לכל שאלה מופקת טיוטה אחת ונבדקת פעם אחת.
 
----
+## זרימת הטיפול בשאלה
 
-## 1. ארכיטקטורת המערכת ומבנה הפרויקט (Modular Structure)
+1. **יוצר התשובה (Actor)** מקבל את מקורות הרקע (בהודעת המערכת), את היסטוריית השיחה ואת השאלה, ומפיק טיוטה.
+2. **מעריך התשובות (Critic)** מקבל את השאלה, הטיוטה, היסטוריית השיחה ושני מקורות הרקע, ומחזיר פלט מובנה שמאומת מול מודל `Evaluation`.
+3. ההחלטה נשענת רק על השדה הבוליאני `is_acceptable` לאחר האימות:
+   - **אושר:** התשובה מוצגת בצ׳אט ונכנסת להיסטוריה שמשמשת לשאלות המשך.
+   - **נדחה:** הטיוטה אינה מוצגת. המשתמש מקבל הודעה שהתשובה לא אושרה.
+   - **שגיאה טכנית** (כשל בקריאה למודל, פלט שאינו JSON, שדה חסר או מסוג שגוי): הטיפול בשאלה נעצר עם הודעה ברורה. כשל אימות לעולם אינו נחשב אישור.
+4. כל שאלה נרשמת כרשומה אחת ב-`logs/inspection_log.json`, בנפרד מהצ׳אט.
 
-הקוד בנוי במבנה מודולרי מוקפד, שבו רכיב היצירה (Actor) ורכיב ההערכה (Critic) מופרדים לחלוטין לקראת חיבורם בלולאת השיפור (Part C):
+## מבנה הפרויקט
 
 ```text
 HW1/
-├── data/
-│   ├── linkedin_profile.txt       # מקור רקע 1: פרופיל מקצועי מפורט (פרופיל לדוגמה)
-│   └── personal_summary.txt       # מקור רקע 2: סיכום אישי ומקצועי כחצי עמוד (פרופיל לדוגמה)
+├── app.py                  # ממשק Gradio בעברית
 ├── src/
-│   ├── __init__.py
-│   ├── schema.py                  # מודל Pydantic Structured Output בשם Evaluation (חלק ב׳)
-│   ├── config.py                  # הגדרות סביבה (.env), מודלים (MODEL_NAME, CRITIC_MODEL_NAME)
-│   ├── prompts.py                 # הנחיות ה-Actor וה-Critic (SYSTEM_EVALUATOR, USER_EVALUATOR)
-│   ├── actor.py                   # יוצר התשובה (Actor), ניהול היסטוריית השיחה וקריאה ל-LLM
-│   ├── evaluator.py               # מעריך התשובות (Critic), אכיפת סכמה וטיפול בשגיאות טכניות
-│   └── logger.py                  # ניהול יומן בדיקה נפרד (inspection_log.json)
-├── logs/
-│   └── inspection_log.json        # יומן מעקב נפרד עבור טיוטות, החלטות מעריך ושגיאות טכניות
-├── tests/
-│   ├── test_part_a.py             # בדיקות יחידה ואינטגרציה ל-Actor (חלק א׳)
-│   └── test_evaluator.py          # בדיקות יחידה ואינטגרציה ל-Critic (חלק ב׳)
-├── assets/
-│   ├── bot_avatar.svg             # אוואטר שטוח וקטורי לדמות
-│   └── user_avatar.svg            # אוואטר שטוח וקטורי למשתמש
-├── app.py                         # ממשק צ'אט מקומי בעברית מבוסס Gradio
-├── requirements.txt               # תלויות הפרויקט (openai, pydantic, gradio, python-dotenv)
-├── .env.example                   # קובץ דוגמה להגדרת משתני סביבה
-├── .gitignore                     # החרגת מפתחות סודיים, מטמון וסביבה וירטואלית
-└── README.md                      # הוראות התקנה, הגדרה והרצה
+│   ├── config.py           # נתיבים, שמות מודלים, טעינת מקורות, לקוח OpenAI
+│   ├── prompts.py          # הנחיות היוצר (System Prompt) והמעריך (Evaluator System / User)
+│   ├── schema.py           # מודל Pydantic בשם Evaluation (is_acceptable: bool, feedback: str)
+│   ├── actor.py            # יוצר התשובה
+│   ├── evaluator.py        # מעריך התשובות; כל כשל הופך ל-TechnicalEvaluationError
+│   ├── pipeline.py         # טיפול בשאלה אחת: טיוטה, הערכה, רישום ביומן
+│   ├── theme.py            # מערכת העיצוב: פלטה לבהיר/כהה, ערכת Gradio ו-CSS
+│   └── logger.py           # יומן הבדיקה (JSON)
+├── data/
+│   ├── linkedin_profile.txt   # פרופיל LinkedIn (פרופיל לדוגמה)
+│   └── personal_summary.txt   # סיכום אישי בהיקף כחצי עמוד (פרופיל לדוגמה)
+├── tests/                  # בדיקות pytest (ללא רשת) + בדיקות חיות אופציונליות
+├── logs/inspection_log.json
+├── requirements.txt / requirements-dev.txt
+└── .env.example
 ```
 
----
+## מודלים
 
-## 2. מודלי השפה (LLMs) וספריית הלקוח
+| תפקיד | משתנה סביבה | בניסוי |
+|---|---|---|
+| יוצר התשובה (Actor) | `MODEL_NAME` | `gpt-5.4-mini` |
+| מעריך התשובות (Critic) | `CRITIC_MODEL_NAME` (ברירת מחדל: `MODEL_NAME`) | `gpt-5.4-mini` |
 
-- **ספריית הלקוח**: `OpenAI` Python SDK הרשמי (תמיכה מובנית ב-Structured Outputs).
-- **מודל ה-Actor**: `gpt-4o-mini` (מוגדר ב-`MODEL_NAME` בקובץ `.env`).
-- **מודל ה-Critic**: `gpt-4o-mini` (מוגדר ב-`CRITIC_MODEL_NAME` בקובץ `.env`, ניתן להגדרה עצמאית).
+שני התפקידים משתמשים בקריאות ובהנחיות נפרדות. המעריך משתמש ב-Structured Outputs של OpenAI (`chat.completions.parse`), והתוצאה מאומתת שוב מול `Evaluation` במצב strict.
 
----
+## התקנה והרצה
 
-## 3. סכמת ההערכה המובנית (Pydantic Schema: `Evaluation`)
+נבדק עם Python 3.14 (נדרש 3.10 ומעלה).
 
-מוגדרת בקובץ `src/schema.py` בדיוק לפי דרישות המטלה:
-```python
-from pydantic import BaseModel, Field
-
-class Evaluation(BaseModel):
-    is_acceptable: bool = Field(description="החלטה האם התשובה עומדת בכל הקריטריונים (True) או נדחית (False).")
-    feedback: str = Field(description="נימוק קצר. במקרה של דחייה, פירוט הבעיה הספציפית והנחיה מעשית לתיקון.")
-```
-
-ההחלטה להמשך התהליך מבוססת באופן בלעדי על השדה הבוליאני `is_acceptable` המאומת, ולא על חיפוש מילים בטקסט חופשי.
-
----
-
-## 4. הנחיות המעריך — קריטריוני החלטה (`SYSTEM_EVALUATOR`)
-
-מוגדר ב-`src/prompts.py` ואוכף 4 קריטריונים מחייבים:
-1. **א. ביסוס במקורות (Source Grounding):** כל העובדות נתמכות במפורש במקורות הרקע. אין הישגים, מעסיקים או עובדות שהומצאו.
-2. **ב. מענה לשאלה (Answering the Question):** התשובה מתייחסת ישירות לבקשת המשתמש ולהקשר השיחה.
-3. **ג. טיפול במידע חסר (Handling Missing Information):** כאשר אין בסיס עובדתי במקורות, תשובה שמבהירה בצדק ובמפורש שחסר מידע מאושרת (`is_acceptable=True`). תשובה שמנחשת או ממציאה נדחית.
-4. **ד. בהירות וסגנון (Clarity & Style):** תשובה ברורה, עניינית, מנומסת ובגוף ראשון.
-
-הודעת הבדיקה (`build_user_evaluator_prompt`) מעבירה למעריך בכל פנייה:
-- את שאלת המשתמש הנוכחית
-- את התשובה המועמדת
-- את מקורות הרקע המלאים (`linkedin_profile.txt` ו-`personal_summary.txt`)
-- את היסטוריית השיחה הרלוונטית
-
----
-
-## 5. טיפול בשגיאות טכניות ויומן בדיקה (Inspection Log)
-
-- **מניעת כשל סכמה כאישור תוכן:**
-  במקרה של כשל קריאה לרשת, שגיאת פענוח JSON, או אי-התאמה לסכמת Pydantic (`ValidationError`), נזרקת שגיאה מסוג `TechnicalEvaluationError`. המערכת מתעדת ביומן הבדיקה סטטוס `TECHNICAL_ERROR` עם ציון מפורש שההערכה לא הושלמה (`is_acceptable: None`), ועוצרת את הטיפול ללא מתן אישור שגוי.
-- **יומן הבדיקה (`logs/inspection_log.json`):**
-  מתעד בנפרד מממשק המשתמש כל טיוטה, את החלטת המעריך (`is_acceptable`), ואת המשוב המנומק (`feedback`).
-
----
-
-## 6. הוראות התקנה והרצה
-
-### התקנת תלויות:
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
-pip install -r requirements.txt
+pip install -r requirements-dev.txt   # כולל את requirements.txt + pytest, ruff
+
+cp .env.example .env                  # והגדירו OPENAI_API_KEY
+
+python app.py                         # http://127.0.0.1:7860
 ```
 
-### הגדרת מפתחות סביבה (.env):
+## בדיקות
+
 ```bash
-cp .env.example .env
-# ערוך את .env והגדר OPENAI_API_KEY
+pytest                                # 59 בדיקות, ללא קריאות רשת וללא כתיבה ליומן האמיתי
+RUN_LIVE_TESTS=1 pytest -m live       # 3 בדיקות מול המודל המוגדר (נרשמות ביומן)
+ruff check . && ruff format --check .
+pyright                               # npm install -g pyright
 ```
 
-### הרצת הבדיקות האוטומטיות:
-```bash
-# בדיקות חלק א׳ (Actor)
-python tests/test_part_a.py
+## יומן הבדיקה
 
-# בדיקות חלק ב׳ (Critic / Evaluator)
-python tests/test_evaluator.py
-```
+כל רשומה כוללת: `session_id`, `turn_index`, `question`, `status` (`APPROVED` / `REJECTED` / `TECHNICAL_ERROR`), שמות המודלים, `candidate_response` (הטיוטה), `evaluation` (`is_acceptable` + `feedback`), `evaluation_completed`, `technical_error` (השלב והסיבה) ו-`displayed_response`.
+בשגיאה טכנית `evaluation` הוא `null` ו-`evaluation_completed` הוא `false`, כלומר לא נרשמת החלטת תוכן שלא התקבלה.
 
-### הפעלת הצ׳אט:
-```bash
-python app.py
-```
-והממשק יהיה זמין בדפדפן בכתובת: `http://127.0.0.1:7860`.
+## בדיקה ידנית של תשובות שאושרו (חלק ב׳)
+
+אימות Pydantic בודק מבנה וסוגי נתונים בלבד, ולא את נכונות ההחלטה. שתי תשובות שאושרו בהרצה החיה הושוו ידנית למקורות:
+
+| שאלה | התשובה שאושרה | הפרט במקור | תואם |
+|---|---|---|---|
+| באיזה מוסד עשית את התואר השני שלך? | "עשיתי את התואר השני שלי במדעי המחשב בטכניון – מכון טכנולוגי לישראל." | `linkedin_profile.txt`, השכלה 1: "תואר שני (M.Sc.) במדעי המחשב ... הטכניון - מכון טכנולוגי לישראל" | כן |
+| ובאיזה ממוצע סיימת אותו? (שאלת המשך) | "סיימתי את התואר השני עם ממוצע 94." | `linkedin_profile.txt`, השכלה 1: "ממוצע ציונים: 94" | כן; ההקשר "אותו" נפתר נכון מהתשובה הקודמת |
