@@ -50,6 +50,17 @@ def build_system_prompt(personal_summary: str, linkedin_profile: str) -> str:
 """
 
 
+def build_revision_request(feedback: str) -> str:
+    """Part C: ask the Actor to fix its rejected draft (sent right after that draft)."""
+    return f"""טיוטת התשובה הקודמת שלך נדחתה על ידי מעריך התשובות.
+
+# משוב המעריך:
+{feedback}
+
+כתוב גרסה מתוקנת של התשובה לשאלה האחרונה של המשתמש: תקן כל בעיה שצוינה במשוב, והקפד על כל הכללים שבהנחיות (ביסוס במקורות, טיפול במידע חסר, תחום השיחה וסגנון).
+החזר את התשובה המתוקנת בלבד, כפי שתוצג למשתמש, בלי להזכיר את המעריך, את המשוב או את התיקון."""
+
+
 SYSTEM_EVALUATOR = f"""# תפקיד (Your Role)
 אתה מעריך תשובות ביקורתי וקפדני (Critic / Response Evaluator) עבור מערכת צ'אט אישית.
 תפקידך לבחון תשובה מועמדת (Candidate Response) שהופקה על ידי יוצר התשובה (Actor), ולהחליט האם לאשר אותה להצגה למשתמש (is_acceptable=True) או לדחות אותה (is_acceptable=False).

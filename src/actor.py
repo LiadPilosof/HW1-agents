@@ -1,4 +1,8 @@
-"""Actor (response generator): drafts a grounded answer from sources + history + question."""
+"""Actor (response generator): drafts a grounded answer from sources + history + question.
+
+For a revision (Part C) the Actor also receives its rejected draft and the Critic's
+feedback, and is asked for a corrected version of the same answer.
+"""
 
 from collections.abc import Sequence
 
@@ -11,8 +15,8 @@ from src.config import (
     get_openai_client,
     get_personal_summary,
 )
-from src.prompts import build_system_prompt
-from src.schema import ChatTurn
+from src.prompts import build_revision_request, build_system_prompt
+from src.schema import ChatTurn, RejectedDraft
 
 
 class Actor:
@@ -33,9 +37,17 @@ class Actor:
         return self._client
 
     def build_messages(
-        self, question: str, history: Sequence[ChatTurn] = ()
+        self,
+        question: str,
+        history: Sequence[ChatTurn] = (),
+        rejected: RejectedDraft | None = None,
     ) -> list[ChatCompletionMessageParam]:
-        """System prompt (with sources) + conversation history + the current question."""
+        """
+        System prompt (with sources) + conversation history + the current question.
+
+        With `rejected`, the rejected draft follows as the Actor's own previous turn,
+        then the Critic's feedback with a request for a corrected version.
+        """
         messages: list[ChatCompletionMessageParam] = [
             {"role": "system", "content": self.system_prompt}
         ]
@@ -45,13 +57,21 @@ class Actor:
             else:
                 messages.append({"role": "assistant", "content": turn["content"]})
         messages.append({"role": "user", "content": question})
+        if rejected is not None:
+            messages.append({"role": "assistant", "content": rejected.response})
+            messages.append({"role": "user", "content": build_revision_request(rejected.feedback)})
         return messages
 
-    def generate(self, question: str, history: Sequence[ChatTurn] = ()) -> str:
+    def generate(
+        self,
+        question: str,
+        history: Sequence[ChatTurn] = (),
+        rejected: RejectedDraft | None = None,
+    ) -> str:
         """Return the candidate response. Raises on API failure or an empty answer."""
         response = self.client.chat.completions.create(
             model=self.model,
-            messages=self.build_messages(question, history),
+            messages=self.build_messages(question, history, rejected),
         )
         content = (response.choices[0].message.content or "").strip()
         if not content:

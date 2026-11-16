@@ -1,4 +1,4 @@
-"""Gradio UI handlers: building the app, delivered history, and the verdict strip."""
+"""Gradio UI handlers: building the app, the loop's progress, delivered history, verdicts."""
 
 import gradio as gr
 import pytest
@@ -6,7 +6,11 @@ import pytest
 import app
 from src.actor import Actor
 from src.evaluator import Evaluator
+from src.pipeline import EXHAUSTED_NOTICE, Attempt
+from src.schema import Evaluation
 from tests.fakes import completion, evaluation_json
+
+APPROVE = evaluation_json(True, "מבוסס")
 
 
 @pytest.fixture
@@ -16,11 +20,23 @@ def wired(fake_client, log, monkeypatch):
     monkeypatch.setattr(app, "get_evaluator", lambda: Evaluator(client=fake_client))
     monkeypatch.setattr(app, "get_logger", lambda: log)
 
-    def respond(actor_text, critic_json):
-        fake_client.chat.completions.create.return_value = completion(actor_text)
-        fake_client.chat.completions.parse.return_value = completion(critic_json)
+    def respond(actor_texts: list[str], critic_jsons: list[str]):
+        fake_client.chat.completions.create.side_effect = [completion(t) for t in actor_texts]
+        fake_client.chat.completions.parse.side_effect = [completion(c) for c in critic_jsons]
 
     return respond
+
+
+def answer_updates(question, display, session) -> list[tuple]:
+    """All UI updates the answer generator yields, in order."""
+    return list(app.answer(question, display, session))
+
+
+def final(question, display, session) -> tuple:
+    return answer_updates(question, display, session)[-1]
+
+
+# --- Building and wiring -------------------------------------------------------------
 
 
 def test_create_demo_builds():
@@ -50,65 +66,121 @@ def test_stage_question_shows_message_and_locks_composer():
 def test_blank_input_is_ignored(text):
     *_, pending, _ = app.stage_question(text, [])
     assert pending is None
-    assert app.answer(None, [], None) == (gr.skip(), gr.skip(), gr.skip())
+    assert answer_updates(None, [], None) == [(gr.skip(), gr.skip(), gr.skip())]
 
 
-def test_approved_answer_is_displayed_and_kept_as_context(wired):
-    wired("עבדתי ב-DataPulse.", evaluation_json(True, "מבוסס"))
-    display, session, verdict = app.answer(
-        "איפה עבדת?", [{"role": "user", "content": "איפה עבדת?"}], None
-    )
+# --- Loop outcomes in the UI ---------------------------------------------------------
+
+
+def test_approved_first_time_is_displayed_and_kept_as_context(wired):
+    wired(["עבדתי ב-DataPulse."], [APPROVE])
+    updates = answer_updates("איפה עבדת?", [{"role": "user", "content": "איפה עבדת?"}], None)
+    assert len(updates) == 1, "no revision progress when the first draft is approved"
+    display, session, verdict = updates[0]
     assert display[-1] == {"role": "assistant", "content": "עבדתי ב-DataPulse."}
     assert session["context"] == [
         {"role": "user", "content": "איפה עבדת?"},
         {"role": "assistant", "content": "עבדתי ב-DataPulse."},
     ]
-    assert session["questions"] == 1
-    assert "approved" in verdict and "מבוסס" in verdict
+    assert "approved" in verdict and "בניסיון 1 מתוך 3" in verdict
+
+
+def test_revision_shows_progress_then_the_approved_revision(wired):
+    wired(
+        ["עבדתי ב-Google.", "עבדתי ב-DataPulse."],
+        [evaluation_json(False, "Google אינה במקורות"), APPROVE],
+    )
+    progress, last = answer_updates("איפה עבדת?", [], None)
+
+    chat_update, _, revising = progress
+    assert chat_update == gr.skip(), "the chat is not touched while revising"
+    assert "pending" in revising and "ניסיון 2 מתוך 3" in revising
+    assert "Google אינה במקורות" in revising  # feedback so far is visible
+    assert "עבדתי ב-Google." not in revising  # drafts stay in the log only
+
+    display, session, verdict = last
+    assert display[-1]["content"] == "עבדתי ב-DataPulse."
+    assert "Google" not in str(display)
+    assert session["context"][-1]["content"] == "עבדתי ב-DataPulse."
+    assert "בניסיון 2 מתוך 3" in verdict
+    assert "ניסיון 1: נדחה" in verdict and "ניסיון 2: אושר" in verdict
+
+
+def test_exhausted_attempts_show_a_notice_and_keep_context_clean(wired):
+    rejection = evaluation_json(False, "פרט מומצא")
+    wired(["א", "ב", "ג"], [rejection, rejection, rejection])
+    updates = answer_updates("איפה עבדת?", [], None)
+    assert len(updates) == 3  # two "revising" updates + the final state
+    display, session, verdict = updates[-1]
+    assert display[-1]["content"] == EXHAUSTED_NOTICE
+    assert session["context"] == []
+    assert "exhausted" in verdict and verdict.count("נדחה") == 3
+
+
+def test_new_question_after_exhaustion_starts_fresh(wired, fake_client):
+    rejection = evaluation_json(False, "פרט מומצא")
+    wired(["א", "ב", "ג", "עבדתי ב-DataPulse."], [rejection, rejection, rejection, APPROVE])
+    _, session, _ = final("שאלה 1", [], None)
+    _, session, verdict = final("איפה עבדת?", [], session)
+    assert "בניסיון 1 מתוך 3" in verdict
+    assert session["questions"] == 2
+    assert session["context"] == [
+        {"role": "user", "content": "איפה עבדת?"},
+        {"role": "assistant", "content": "עבדתי ב-DataPulse."},
+    ]
+    # The unanswered first question is not part of the model's context.
+    last_actor_messages = fake_client.chat.completions.create.call_args.kwargs["messages"]
+    assert "שאלה 1" not in str(last_actor_messages)
 
 
 def test_follow_up_receives_previous_approved_answer(wired, fake_client):
-    wired("עבדתי ב-DataPulse.", evaluation_json(True, "מבוסס"))
-    _, session, _ = app.answer("איפה עבדת?", [], None)
-    wired("שם הייתי ML Engineer.", evaluation_json(True, "מבוסס"))
-    _, session, _ = app.answer("ומה עשית שם?", [], session)
+    wired(["עבדתי ב-DataPulse.", "שם הייתי ML Engineer."], [APPROVE, APPROVE])
+    _, session, _ = final("איפה עבדת?", [], None)
+    _, session, _ = final("ומה עשית שם?", [], session)
     messages = fake_client.chat.completions.create.call_args.kwargs["messages"]
     assert [m["content"] for m in messages[1:]] == [
         "איפה עבדת?",
         "עבדתי ב-DataPulse.",
         "ומה עשית שם?",
     ]
-    assert session["questions"] == 2
-
-
-def test_rejected_answer_is_not_shown_or_added_to_context(wired):
-    wired("עבדתי ב-Google.", evaluation_json(False, "Google אינה במקורות"))
-    display, session, verdict = app.answer("איפה עבדת?", [], None)
-    assert "Google" not in display[-1]["content"]
-    assert session["context"] == []
-    assert "rejected" in verdict
 
 
 def test_technical_error_is_shown_clearly(wired):
-    wired("טיוטה", '{"is_acceptable": true}')
-    display, session, verdict = app.answer("שאלה", [], None)
+    wired(["טיוטה"], ['{"is_acceptable": true}'])
+    updates = answer_updates("שאלה", [], None)
+    assert len(updates) == 1
+    display, session, verdict = updates[0]
     assert "שגיאה טכנית" in display[-1]["content"]
     assert session["context"] == []
-    assert "error" in verdict
+    assert "error" in verdict and "ההערכה לא הושלמה" in verdict
+
+
+# --- Verdict rendering ---------------------------------------------------------------
 
 
 def test_error_details_are_labelled_and_left_to_right():
-    html = app.render_verdict("error", "t", "x", "ValidationError: feedback missing")
+    attempts = (Attempt(1, "x", error_stage="critic", error="ValidationError: feedback missing"),)
+    html = app.render_verdict("error", "t", "x", attempts)
     assert "פרטי השגיאה" in html and 'dir="ltr"' in html
-    assert "הצגת המשוב" in app.render_verdict("rejected", "t", "x", "feedback")
 
 
 def test_verdict_escapes_model_text():
-    html = app.render_verdict("rejected", "t", "x", "<script>alert(1)</script>")
+    evil = Evaluation(is_acceptable=False, feedback="<script>alert(1)</script>")
+    html = app.render_verdict("exhausted", "t", "x", (Attempt(1, "draft", evil),))
     assert "<script>" not in html and "&lt;script&gt;" in html
+    assert "משוב המעריך" in html
 
 
 def test_reset_clears_conversation():
     display, session, pending, verdict, textbox = app.reset()
     assert display == [] and session is None and pending is None
     assert verdict == app.VERDICT_IDLE and textbox["interactive"] is True
+
+
+def test_launch_allows_the_assets_folder(monkeypatch):
+    """Avatars must load during streamed updates even when started from another directory."""
+    captured: dict = {}
+    monkeypatch.setattr(gr.Blocks, "launch", lambda self, **kwargs: captured.update(kwargs))
+    app.launch_app(server_port=1234)
+    assert str(app.ASSETS_DIR) in captured["allowed_paths"]
+    assert captured["server_port"] == 1234 and captured["theme"] is app.THEME

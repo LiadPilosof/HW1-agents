@@ -1,0 +1,45 @@
+flowchart TD
+    SRC[("מקורות רקע<br/>linkedin_profile.txt<br/>personal_summary.txt")]
+    UI["ממשק הצ׳אט (Gradio)<br/>שאלת המשתמש"]
+    HIST[("היסטוריית השיחה<br/>תשובות מאושרות בלבד")]
+    ACTOR["יוצר התשובה (Actor)<br/>Prompt System + מקורות + היסטוריה + שאלה"]
+    CRITIC["מעריך התשובות (Critic)<br/>Evaluator System + Evaluator User"]
+    VALID{"אימות Pydantic<br/>Evaluation<br/>is_acceptable, feedback"}
+    DECIDE{"is_acceptable?"}
+    LEFT{"נותרו ניסיונות?<br/>(עד 3 לשאלה)"}
+    OK(["יציאה: אישור<br/>התשובה מוצגת ונוספת להיסטוריה"])
+    EXH(["יציאה: מיצוי ניסיונות<br/>הודעה למשתמש, אף טיוטה לא מוצגת"])
+    ERR(["יציאה: שגיאה טכנית<br/>עצירה והודעה ברורה"])
+    LOG[("יומן בדיקה<br/>logs/inspection_log.json")]
+
+    UI --> ACTOR
+    SRC --> ACTOR
+    HIST --> ACTOR
+    ACTOR -- "תשובה מועמדת" --> CRITIC
+    SRC --> CRITIC
+    HIST --> CRITIC
+    CRITIC -- "פלט מובנה (JSON)" --> VALID
+    VALID -- "תקין" --> DECIDE
+    VALID -- "לא ניתן לפענוח / שדה חסר" --> ERR
+    ACTOR -- "קריאה למודל נכשלה" --> ERR
+    DECIDE -- "True" --> OK
+    DECIDE -- "False" --> LEFT
+    LEFT -- "כן" --> FB["תשובה שנדחתה + משוב"]
+    FB == "קשת המשוב: גרסה מתוקנת" ==> ACTOR
+    LEFT -- "לא (ניסיון 3 נדחה)" --> EXH
+    OK --> UI
+    EXH --> UI
+    ERR --> UI
+    OK -.-> LOG
+    EXH -.-> LOG
+    ERR -.-> LOG
+
+    classDef exitOk fill:#e7f2ee,stroke:#1b6b57,color:#142028;
+    classDef exitBad fill:#fbeeea,stroke:#b03a26,color:#142028;
+    classDef exitErr fill:#fbf3e3,stroke:#8a5300,color:#142028;
+    classDef feedback fill:#ffffff,stroke:#1b6b57,stroke-width:2px,color:#142028;
+    class OK exitOk;
+    class EXH exitBad;
+    class ERR exitErr;
+    class FB feedback;
+    linkStyle 13 stroke:#1b6b57,stroke-width:3px;

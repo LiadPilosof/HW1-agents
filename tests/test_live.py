@@ -14,7 +14,8 @@ import pytest
 from src.actor import Actor
 from src.evaluator import Evaluator
 from src.logger import InspectionLogger
-from src.pipeline import handle_question
+from src.pipeline import MAX_ATTEMPTS, handle_question
+from src.schema import RejectedDraft
 
 pytestmark = [
     pytest.mark.live,
@@ -81,3 +82,31 @@ def test_critic_rejects_off_topic_help():
         "אין לי מידע על מזג האוויר, אבל אם תרצה אוכל לבדוק עבורך את התחזית במדריד.",
     )
     assert evaluation.is_acceptable is False
+
+
+class FabricatedFirstDraft(Actor):
+    """Test-only Actor: a fabricated first draft, then real revisions from the model."""
+
+    def generate(self, question, history=(), rejected: RejectedDraft | None = None):
+        if rejected is None:
+            return "לפני TechNova עבדתי שבע שנים כמהנדס ראשי ב-Google בקליפורניה."
+        return super().generate(question, history, rejected)
+
+
+def test_feedback_loop_fixes_a_fabricated_draft():
+    result = handle_question(
+        "באילו חברות עבדת לפני TechNova?",
+        [],
+        actor=FabricatedFirstDraft(),
+        evaluator=Evaluator(),
+        logger=InspectionLogger(),
+        session_id="live-tests",
+        turn_index=1,
+        scenario_id="live-revision",
+    )
+    first = result.attempts[0]
+    assert first.evaluation is not None and first.evaluation.is_acceptable is False
+    assert result.approved, result
+    assert 2 <= len(result.attempts) <= MAX_ATTEMPTS
+    assert "Google" not in result.message
+    assert "DataPulse" in result.message or "InnoSoft" in result.message

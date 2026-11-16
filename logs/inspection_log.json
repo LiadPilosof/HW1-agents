@@ -754,5 +754,213 @@
     },
     "technical_error": null,
     "displayed_response": null
+  },
+  {
+    "entry_id": "c2e1ca49-e0eb-4858-9064-58748cd8c4ea",
+    "timestamp": "2026-11-16T17:30:25",
+    "scenario_id": "interactive",
+    "session_id": "live-tests",
+    "turn_index": 1,
+    "question": "באיזה מוסד עשית את התואר השני שלך?",
+    "status": "APPROVED",
+    "attempts_used": 1,
+    "max_attempts": 3,
+    "actor_model": "gpt-5.4-mini",
+    "critic_model": "gpt-5.4-mini",
+    "attempts": [
+      {
+        "attempt_number": 1,
+        "candidate_response": "עשיתי את התואר השני שלי במדעי המחשב בטכניון – מכון טכנולוגי לישראל.",
+        "evaluation_completed": true,
+        "is_acceptable": true,
+        "feedback": "התשובה נתמכת במקורות: מצוין במפורש שהתואר השני נעשה בטכניון – מכון טכנולוגי לישראל, והיא עונה ישירות על השאלה.",
+        "technical_error": null
+      }
+    ],
+    "displayed_response": "עשיתי את התואר השני שלי במדעי המחשב בטכניון – מכון טכנולוגי לישראל."
+  },
+  {
+    "entry_id": "a7d84a6a-e869-4b34-84bf-218b22f75531",
+    "timestamp": "2026-11-16T17:30:27",
+    "scenario_id": "interactive",
+    "session_id": "live-tests",
+    "turn_index": 2,
+    "question": "ובאיזה ממוצע סיימת אותו?",
+    "status": "APPROVED",
+    "attempts_used": 1,
+    "max_attempts": 3,
+    "actor_model": "gpt-5.4-mini",
+    "critic_model": "gpt-5.4-mini",
+    "attempts": [
+      {
+        "attempt_number": 1,
+        "candidate_response": "סיימתי את התואר השני שלי בממוצע 94.",
+        "evaluation_completed": true,
+        "is_acceptable": true,
+        "feedback": "המענה תואם למקורות: במקור מצוין שממוצע התואר השני בטכניון הוא 94, ולכן התשובה נתמכת ועונה ישירות לשאלה.",
+        "technical_error": null
+      }
+    ],
+    "displayed_response": "סיימתי את התואר השני שלי בממוצע 94."
+  },
+  {
+    "entry_id": "24844c34-6b23-45c0-a2bf-acff94dd5019",
+    "timestamp": "2026-11-16T17:30:30",
+    "scenario_id": "interactive",
+    "session_id": "live-tests",
+    "turn_index": 1,
+    "question": "מה הציון שלך בבחינה הפסיכומטרית?",
+    "status": "APPROVED",
+    "attempts_used": 1,
+    "max_attempts": 3,
+    "actor_model": "gpt-5.4-mini",
+    "critic_model": "gpt-5.4-mini",
+    "attempts": [
+      {
+        "attempt_number": 1,
+        "candidate_response": "הציון שלי בבחינה הפסיכומטרית לא מופיע במקורות המידע שלי. אם תרצה, אפשר לשאול אותי על ההשכלה, הניסיון התעסוקתי, המיומנויות או הפרויקטים שלי.",
+        "evaluation_completed": true,
+        "is_acceptable": true,
+        "feedback": "התשובה תקינה: היא מציינת במפורש שהציון הפסיכומטרי לא מופיע במקורות, ולכן אינה ממציאה מידע. בנוסף, היא עונה ישירות לשאלה ומפנה לנושאים שכן מופיעים במקורות.",
+        "technical_error": null
+      }
+    ],
+    "displayed_response": "הציון שלי בבחינה הפסיכומטרית לא מופיע במקורות המידע שלי. אם תרצה, אפשר לשאול אותי על ההשכלה, הניסיון התעסוקתי, המיומנויות או הפרויקטים שלי."
+  },
+  {
+    "entry_id": "4b0a13a4-f2f5-4a8f-8a84-c0e1530bc60c",
+    "timestamp": "2026-11-16T17:30:35",
+    "scenario_id": "interactive",
+    "session_id": "live-tests",
+    "turn_index": 1,
+    "question": "מה מזג האוויר בספרד?",
+    "status": "APPROVED",
+    "attempts_used": 1,
+    "max_attempts": 3,
+    "actor_model": "gpt-5.4-mini",
+    "critic_model": "gpt-5.4-mini",
+    "attempts": [
+      {
+        "attempt_number": 1,
+        "candidate_response": "אני עונה רק על שאלות לגבי הרקע שלי כאון ברק — השכלה, ניסיון, מיומנויות ופרויקטים — אז אם תרצה אפשר לשאול אותי על זה.",
+        "evaluation_completed": true,
+        "is_acceptable": true,
+        "feedback": "התשובה עומדת בהנחיה לשאלות שאינן קשורות לאלון ברק: היא מסרבת בנימוס, עונה בגוף ראשון בעברית, ומפנה לשאול על ההשכלה, הניסיון, המיומנויות או הפרויקטים שלו.",
+        "technical_error": null
+      }
+    ],
+    "displayed_response": "אני עונה רק על שאלות לגבי הרקע שלי כאון ברק — השכלה, ניסיון, מיומנויות ופרויקטים — אז אם תרצה אפשר לשאול אותי על זה."
+  },
+  {
+    "entry_id": "bed5f70e-4b62-4783-bdc3-4b9961b85c25",
+    "timestamp": "2026-11-16T17:30:44",
+    "scenario_id": "live-revision",
+    "session_id": "live-tests",
+    "turn_index": 1,
+    "question": "באילו חברות עבדת לפני TechNova?",
+    "status": "APPROVED",
+    "attempts_used": 3,
+    "max_attempts": 3,
+    "actor_model": "gpt-5.4-mini",
+    "critic_model": "gpt-5.4-mini",
+    "attempts": [
+      {
+        "attempt_number": 1,
+        "candidate_response": "לפני TechNova עבדתי שבע שנים כמהנדס ראשי ב-Google בקליפורניה.",
+        "evaluation_completed": true,
+        "is_acceptable": false,
+        "feedback": "התשובה הומצאה ואינה נתמכת במקורות: במקורות אין שום אזכור ל-Google, לקליפורניה או לכך שעבדתי שם שבע שנים. לפי הפרופיל, לפני TechNova עבדתי ב-DataPulse Ltd ובהמשך ב-InnoSoft Technologies. יש לתקן את התשובה כך שתשקף רק את החברות שמופיעות במקורות לפני TechNova.",
+        "technical_error": null
+      },
+      {
+        "attempt_number": 2,
+        "candidate_response": "לפני TechNova עבדתי ב-DataPulse Ltd ובהמשך ב-InnoSoft Technologies.",
+        "evaluation_completed": true,
+        "is_acceptable": false,
+        "feedback": "התשובה אינה מבוססת על המקורות: במקורות מצוין שלפני TechNova עבדת ב-DataPulse Ltd ולאחר מכן ב-InnoSoft Technologies, בסדר הזה. בתשובה הוחלף הסדר והוצגה נוסחה לא נכונה של 'לפני TechNova עבדתי ב-DataPulse Ltd ובהמשך ב-InnoSoft Technologies' בלי לדייק שהחברה האחרונה לפני TechNova היא DataPulse בלבד. יש לתקן כך שהתשובה תציין במפורש את החברות לפי הרצף הנכון: קודם InnoSoft Technologies, אחר כך DataPulse Ltd, ולאחר מכן TechNova.",
+        "technical_error": null
+      },
+      {
+        "attempt_number": 3,
+        "candidate_response": "לפני TechNova עבדתי קודם ב-InnoSoft Technologies, ואחר כך ב-DataPulse Ltd.",
+        "evaluation_completed": true,
+        "is_acceptable": true,
+        "feedback": "התשובה נתמכת במקורות: לפני TechNova עבדת ב-DataPulse Ltd ולאחר מכן ב-InnoSoft Technologies, והתשובה עונה ישירות על השאלה. שים לב רק שבפרופיל InnoSoft קדמה ל-DataPulse, ולכן הניסוח 'קודם... ואחר כך...' הפוך כרונולוגית; אם רוצים דיוק, יש לנסח ש-InnoSoft הייתה לפני DataPulse.",
+        "technical_error": null
+      }
+    ],
+    "displayed_response": "לפני TechNova עבדתי קודם ב-InnoSoft Technologies, ואחר כך ב-DataPulse Ltd."
+  },
+  {
+    "entry_id": "9a1575b7-d57f-4828-ac57-c3abe2a66148",
+    "timestamp": "2026-11-16T17:40:18",
+    "scenario_id": "interactive",
+    "session_id": "ef0f7dba1887",
+    "turn_index": 1,
+    "question": "באיזה מוסד עשית את התואר השני שלך?",
+    "status": "APPROVED",
+    "attempts_used": 1,
+    "max_attempts": 3,
+    "actor_model": "gpt-5.4-mini",
+    "critic_model": "gpt-5.4-mini",
+    "attempts": [
+      {
+        "attempt_number": 1,
+        "candidate_response": "עשיתי את התואר השני שלי במדעי המחשב, בהתמחות בבינה מלאכותית, בטכניון – מכון טכנולוגי לישראל.",
+        "evaluation_completed": true,
+        "is_acceptable": true,
+        "feedback": "התשובה נתמכת במקורות: במקורות מצוין שהתואר השני הוא במדעי המחשב, בהתמחות בבינה מלאכותית, מהטכניון – מכון טכנולוגי לישראל. התשובה עונה ישירות על שאלת המוסד.",
+        "technical_error": null
+      }
+    ],
+    "displayed_response": "עשיתי את התואר השני שלי במדעי המחשב, בהתמחות בבינה מלאכותית, בטכניון – מכון טכנולוגי לישראל."
+  },
+  {
+    "entry_id": "25d2322b-1d13-4c15-854a-68a2fd6b42d6",
+    "timestamp": "2026-11-16T17:40:22",
+    "scenario_id": "interactive",
+    "session_id": "ef0f7dba1887",
+    "turn_index": 2,
+    "question": "ובאיזה ממוצע סיימת אותו?",
+    "status": "APPROVED",
+    "attempts_used": 1,
+    "max_attempts": 3,
+    "actor_model": "gpt-5.4-mini",
+    "critic_model": "gpt-5.4-mini",
+    "attempts": [
+      {
+        "attempt_number": 1,
+        "candidate_response": "סיימתי את התואר השני שלי בטכניון עם ממוצע 94.",
+        "evaluation_completed": true,
+        "is_acceptable": true,
+        "feedback": "הממוצע 94 מופיע במפורש במקורות עבור התואר השני בטכניון, והתשובה עונה ישירות לשאלה שנשאלה.",
+        "technical_error": null
+      }
+    ],
+    "displayed_response": "סיימתי את התואר השני שלי בטכניון עם ממוצע 94."
+  },
+  {
+    "entry_id": "32a34346-c846-4aaf-bcd0-a3e4a33db140",
+    "timestamp": "2026-11-16T17:40:25",
+    "scenario_id": "interactive",
+    "session_id": "ef0f7dba1887",
+    "turn_index": 3,
+    "question": "מה מזג האוויר בספרד?",
+    "status": "APPROVED",
+    "attempts_used": 1,
+    "max_attempts": 3,
+    "actor_model": "gpt-5.4-mini",
+    "critic_model": "gpt-5.4-mini",
+    "attempts": [
+      {
+        "attempt_number": 1,
+        "candidate_response": "אני עונה רק על שאלות לגבי הרקע המקצועי והאישי שלי, אז אפשר לשאול אותי על ההשכלה, הניסיון התעסוקתי, המיומנויות או הפרויקטים שלי.",
+        "evaluation_completed": true,
+        "is_acceptable": true,
+        "feedback": "התגובה תקינה: היא מסרבת בנימוס לשאלה שאינה קשורה לפרופיל ומפנה לשאלות על הרקע המקצועי והאישי. אין בה עובדות לא מבוססות על אלון ברק.",
+        "technical_error": null
+      }
+    ],
+    "displayed_response": "אני עונה רק על שאלות לגבי הרקע המקצועי והאישי שלי, אז אפשר לשאול אותי על ההשכלה, הניסיון התעסוקתי, המיומנויות או הפרויקטים שלי."
   }
 ]

@@ -1,6 +1,6 @@
 """Pydantic models: the Critic's structured output (Part B) and a chat-turn type."""
 
-from typing import Literal, TypedDict
+from typing import Literal, NamedTuple, TypedDict
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
@@ -10,6 +10,13 @@ class ChatTurn(TypedDict):
 
     role: Literal["user", "assistant"]
     content: str
+
+
+class RejectedDraft(NamedTuple):
+    """A candidate the Critic rejected, handed back to the Actor for revision (Part C)."""
+
+    response: str
+    feedback: str
 
 
 class Evaluation(BaseModel):

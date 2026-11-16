@@ -1,7 +1,8 @@
 """
 Hebrew Gradio chat for Assignment 1, Parts A and B.
 
-Every question gets one Actor draft and one Critic evaluation (see src/pipeline.py).
+Every question runs the generate -> evaluate -> revise loop (up to 3 attempts, see
+src/pipeline.py).
 The chat shows user messages and the answers delivered to them; drafts, decisions and
 feedback go to the separate inspection log, with the latest verdict shown in the
 alert under the chat. Visual design tokens live in src/theme.py.
@@ -9,6 +10,7 @@ alert under the chat. Visual design tokens live in src/theme.py.
 
 import html
 import uuid
+from collections.abc import Iterator, Sequence
 from functools import cache
 from pathlib import Path
 from typing import Any
@@ -19,7 +21,7 @@ from src.actor import Actor
 from src.config import ACTOR_MODEL_NAME, CRITIC_MODEL_NAME
 from src.evaluator import Evaluator
 from src.logger import InspectionLogger
-from src.pipeline import TurnResult, handle_question
+from src.pipeline import MAX_ATTEMPTS, Attempt, TurnResult, iter_question
 from src.theme import CSS, THEME
 
 ASSETS_DIR = Path(__file__).resolve().parent / "assets"
@@ -80,28 +82,42 @@ VERDICT_ICONS = {
     "idle": "info",
     "pending": "loader",
     "approved": "check",
-    "rejected": "x",
+    "exhausted": "x",
     "error": "alert",
 }
 
+DECISION_LABELS = {True: "אושר", False: "נדחה", None: "ההערכה לא הושלמה"}
 
-def render_verdict(kind: str, title: str, text: str = "", details: str = "") -> str:
-    """HTML for the verdict alert. kind: idle | pending | approved | rejected | error.
 
-    `details` is the Critic's feedback, or the technical error message for kind="error".
-    """
+def render_attempts(attempts: Sequence[Attempt]) -> str:
+    """Per-attempt decision and feedback (drafts themselves stay in the inspection log)."""
+    items = []
+    for attempt in attempts:
+        decision = attempt.evaluation.is_acceptable if attempt.evaluation else None
+        state = {True: "approved", False: "rejected", None: "error"}[decision]
+        if attempt.evaluation:
+            body = f'<p class="feedback">{html.escape(attempt.evaluation.feedback)}</p>'
+        else:
+            body = f'<p class="feedback technical" dir="ltr">{html.escape(attempt.error or "")}</p>'
+        items.append(
+            f'<li class="attempt {state}"><p class="attempt-head">'
+            f"ניסיון {attempt.number}: {DECISION_LABELS[decision]}</p>{body}</li>"
+        )
+    return f'<ol class="attempts">{"".join(items)}</ol>'
+
+
+def render_verdict(kind: str, title: str, text: str = "", attempts: Sequence[Attempt] = ()) -> str:
+    """HTML for the verdict alert. kind: idle | pending | approved | exhausted | error."""
     body = [f'<p class="verdict-title">{html.escape(title)}</p>']
     if text:
         body.append(f'<p class="verdict-text">{html.escape(text)}</p>')
     if kind == "pending":
         body.append('<div class="skeleton"></div><div class="skeleton short"></div>')
-    if details:
-        is_error = kind == "error"
-        label = "פרטי השגיאה" if is_error else "הצגת המשוב"
-        attrs = ' class="feedback technical" dir="ltr"' if is_error else ' class="feedback"'
+    if attempts:
+        label = "פרטי השגיאה" if kind == "error" else "משוב המעריך"
         body.append(
             f"<details><summary>{label}{icon('chevron')}</summary>"
-            f"<p{attrs}>{html.escape(details)}</p></details>"
+            f"{render_attempts(attempts)}</details>"
         )
     return (
         f'<div class="verdict {kind}" role="status" aria-live="polite">'
@@ -116,19 +132,35 @@ VERDICT_PENDING = render_verdict(
 )
 
 
+def verdict_revising(attempts: Sequence[Attempt]) -> str:
+    """Shown while the Actor revises a rejected draft."""
+    return render_verdict(
+        "pending",
+        f"מתקן את התשובה (ניסיון {len(attempts) + 1} מתוך {MAX_ATTEMPTS})",
+        "המעריך דחה את הטיוטה הקודמת. יוצר התשובה מתקן אותה לפי המשוב.",
+        attempts,
+    )
+
+
 def verdict_for(result: TurnResult) -> str:
-    """Map a pipeline outcome to the verdict alert."""
-    feedback = result.evaluation.feedback if result.evaluation else ""
+    """Map the loop's end state to the verdict alert."""
+    used = len(result.attempts)
     if result.status == "APPROVED":
         return render_verdict(
-            "approved", "התשובה אושרה", "המעריך מצא שהתשובה מבוססת על המקורות.", feedback
+            "approved",
+            "התשובה אושרה",
+            f"המעריך אישר את התשובה בניסיון {used} מתוך {MAX_ATTEMPTS}.",
+            result.attempts,
         )
-    if result.status == "REJECTED":
+    if result.status == "ATTEMPTS_EXHAUSTED":
         return render_verdict(
-            "rejected", "התשובה נדחתה ולא הוצגה", "הטיוטה והמשוב נשמרו ביומן הבדיקה.", feedback
+            "exhausted",
+            "לא התקבלה תשובה מאושרת",
+            f"כל {MAX_ATTEMPTS} הניסיונות נדחו על ידי המעריך. הטיוטות נשמרו ביומן הבדיקה.",
+            result.attempts,
         )
     return render_verdict(
-        "error", "שגיאה טכנית, ההערכה לא הושלמה", result.message, result.error or ""
+        "error", "שגיאה טכנית, הטיפול בשאלה נעצר", result.message, result.attempts
     )
 
 
@@ -174,14 +206,16 @@ def stage_example(display: list, evt: gr.SelectData) -> tuple:
     return stage_question(text, display)
 
 
-def answer(question: str | None, display: list, session: dict | None) -> tuple:
-    """Step 2: run Actor -> Critic once and show the outcome."""
+def answer(question: str | None, display: list, session: dict | None) -> Iterator[tuple]:
+    """Step 2: run the generate -> evaluate -> revise loop, showing progress per attempt."""
     if not question:
-        return gr.skip(), gr.skip(), gr.skip()
+        yield gr.skip(), gr.skip(), gr.skip()
+        return
     session = session or new_session()
-    session["questions"] += 1
+    session["questions"] += 1  # a new question starts a fresh attempt counter
+    attempts: list[Attempt] = []
     try:
-        result = handle_question(
+        run = iter_question(
             question,
             session["context"],
             actor=get_actor(),
@@ -190,11 +224,28 @@ def answer(question: str | None, display: list, session: dict | None) -> tuple:
             session_id=session["id"],
             turn_index=session["questions"],
         )
+        while True:
+            try:
+                attempt = next(run)
+            except StopIteration as done:
+                result: TurnResult = done.value
+                break
+            attempts.append(attempt)
+            if (
+                attempt.evaluation_completed
+                and not attempt.approved
+                and len(attempts) < MAX_ATTEMPTS
+            ):
+                yield gr.skip(), session, verdict_revising(attempts)
     except Exception as error:  # e.g. a background source file is missing
         result = TurnResult(
             "TECHNICAL_ERROR",
             "לא ניתן היה לטפל בשאלה עקב שגיאה בהגדרות המערכת.",
-            error=f"{type(error).__name__}: {error}",
+            (
+                Attempt(
+                    len(attempts) + 1, error_stage="setup", error=f"{type(error).__name__}: {error}"
+                ),
+            ),
         )
     if result.approved:
         # Only delivered answers become context for follow-up questions.
@@ -204,7 +255,7 @@ def answer(question: str | None, display: list, session: dict | None) -> tuple:
             {"role": "assistant", "content": result.message},
         ]
     display = [*(display or []), {"role": "assistant", "content": result.message}]
-    return display, session, verdict_for(result)
+    yield display, session, verdict_for(result)
 
 
 def unlock() -> tuple:
@@ -269,8 +320,16 @@ def create_demo() -> gr.Blocks:
     return demo
 
 
-def launch_app() -> None:
-    create_demo().launch(server_name="127.0.0.1", theme=THEME, css=CSS)
+def launch_app(**overrides: Any) -> None:
+    """Start the local server. Assets are allowed explicitly so the avatars load no
+    matter which directory the app is started from."""
+    options: dict[str, Any] = {
+        "server_name": "127.0.0.1",
+        "theme": THEME,
+        "css": CSS,
+        "allowed_paths": [str(ASSETS_DIR)],
+    }
+    create_demo().launch(**{**options, **overrides})
 
 
 if __name__ == "__main__":

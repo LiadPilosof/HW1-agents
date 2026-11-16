@@ -327,7 +327,7 @@ _COMPONENT_CSS = """
   animation: verdict-in 180ms ease;
 }
 .verdict.approved { --tone: var(--success); --tone-soft: var(--success-soft); --tone-border: var(--success-border); }
-.verdict.rejected { --tone: var(--danger); --tone-soft: var(--danger-soft); --tone-border: var(--danger-border); }
+.verdict.exhausted { --tone: var(--danger); --tone-soft: var(--danger-soft); --tone-border: var(--danger-border); }
 .verdict.error { --tone: var(--warning); --tone-soft: var(--warning-soft); --tone-border: var(--warning-border); }
 .verdict.pending { --tone: var(--accent); }
 .verdict-icon {
@@ -363,6 +363,15 @@ _COMPONENT_CSS = """
   font-size: 14px; line-height: 22px; color: var(--text); white-space: pre-wrap;
 }
 
+.attempts { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 8px; }
+.attempt { display: block; --mark: var(--text-3); padding-inline-start: 12px; border-inline-start: 3px solid var(--mark); }
+/* Gradio's prose makes <p> inside <li> inline; keep heading and feedback stacked. */
+.verdict .attempt > p { display: block !important; }
+.attempt.approved { --mark: var(--success); }
+.attempt.rejected { --mark: var(--danger); }
+.attempt.error { --mark: var(--warning); }
+.attempt-head { margin: 0; font-size: 13px; line-height: 20px; font-weight: 600; color: var(--mark); }
+.attempt .feedback { margin-top: 4px; }
 .feedback.technical {
   direction: ltr; text-align: left; font-family: var(--font-mono);
   font-size: 12.5px; line-height: 20px; color: var(--text-2);
