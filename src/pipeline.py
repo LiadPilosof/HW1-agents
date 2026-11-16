@@ -81,10 +81,6 @@ class TurnResult:
     def approved(self) -> bool:
         return self.status == "APPROVED"
 
-    @property
-    def error(self) -> str | None:
-        return self.attempts[-1].error if self.attempts else None
-
 
 def iter_question(
     question: str,

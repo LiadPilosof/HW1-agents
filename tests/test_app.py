@@ -47,7 +47,11 @@ def test_chat_trash_icon_also_resets_the_conversation():
     """Clearing via the chat's own icon must also drop the model context (session state)."""
     config: dict = dict(app.create_demo().get_config_file())
     (chatbot_id,) = [c["id"] for c in config["components"] if c.get("type") == "chatbot"]
-    clear_deps = [d for d in config["dependencies"] if (chatbot_id, "clear") in d["targets"]]
+    clear_deps = [
+        d
+        for d in config["dependencies"]
+        if (chatbot_id, "clear") in d["targets"] and str(d["api_name"]).startswith("reset")
+    ]
     assert len(clear_deps) == 1
     session_ids = {c["id"] for c in config["components"] if c.get("type") == "state"}
     assert session_ids & set(clear_deps[0]["outputs"])
@@ -172,15 +176,28 @@ def test_verdict_escapes_model_text():
 
 
 def test_reset_clears_conversation():
-    display, session, pending, verdict, textbox = app.reset()
+    display, session, pending, verdict, textbox, send = app.reset()
     assert display == [] and session is None and pending is None
-    assert verdict == app.VERDICT_IDLE and textbox["interactive"] is True
+    assert verdict == app.VERDICT_IDLE
+    assert textbox["interactive"] is True and send["interactive"] is True
+
+
+def test_reset_cancels_an_answer_in_progress():
+    """Both reset controls must cancel the running answer, or it would restore the old chat."""
+    config: dict = dict(app.create_demo().get_config_file())
+    deps: list[dict] = config["dependencies"]
+    answer_ids = {d["id"] for d in deps if str(d.get("api_name")).startswith("answer")}
+    reset_targets = [d["targets"][0] for d in deps if str(d.get("api_name")).startswith("reset")]
+    assert len(answer_ids) == 3 and len(reset_targets) == 2
+    for target in reset_targets:
+        cancelled = {i for d in deps if d["targets"] == [target] for i in d["cancels"]}
+        assert answer_ids <= cancelled
 
 
 def test_launch_allows_the_assets_folder(monkeypatch):
     """Avatars must load during streamed updates even when started from another directory."""
     captured: dict = {}
-    monkeypatch.setattr(gr.Blocks, "launch", lambda self, **kwargs: captured.update(kwargs))
+    monkeypatch.setattr(gr.Blocks, "launch", lambda _self, **kwargs: captured.update(kwargs))
     app.launch_app(server_port=1234)
     assert str(app.ASSETS_DIR) in captured["allowed_paths"]
     assert captured["server_port"] == 1234 and captured["theme"] is app.THEME

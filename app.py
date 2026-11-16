@@ -264,7 +264,15 @@ def unlock() -> tuple:
 
 
 def reset() -> tuple:
-    return [], None, None, VERDICT_IDLE, gr.update(value="", interactive=True)
+    """Start a new conversation; also re-enables the composer of a cancelled answer."""
+    return (
+        [],
+        None,
+        None,
+        VERDICT_IDLE,
+        gr.update(value="", interactive=True),
+        gr.update(interactive=True),
+    )
 
 
 def create_demo() -> gr.Blocks:
@@ -300,23 +308,27 @@ def create_demo() -> gr.Blocks:
         gr.HTML(FOOTER_HTML, padding=False)
 
         staged_outputs = [msg, send, chatbot, pending, verdict]
+        answer_events = []
         for trigger in (
             msg.submit(stage_question, [msg, chatbot], staged_outputs, queue=False),
             send.click(stage_question, [msg, chatbot], staged_outputs, queue=False),
             chatbot.example_select(stage_example, [chatbot], staged_outputs, queue=False),
         ):
-            trigger.then(
+            answering = trigger.then(
                 answer,
                 [pending, chatbot, session],
                 [chatbot, session, verdict],
                 show_progress="minimal",
                 show_progress_on=[chatbot],
-            ).then(unlock, None, [msg, send], queue=False)
+            )
+            answering.then(unlock, None, [msg, send], queue=False)
+            answer_events.append(answering)
 
-        reset_outputs = [chatbot, session, pending, verdict, msg]
-        clear.click(reset, None, reset_outputs, queue=False)
-        # The chat's own clear (trash) icon must also forget the model context.
-        chatbot.clear(reset, None, reset_outputs, queue=False)
+        # Resetting cancels an answer in progress; otherwise it would finish and
+        # write the old conversation back. The trash icon must reset the same way.
+        reset_outputs = [chatbot, session, pending, verdict, msg, send]
+        clear.click(reset, None, reset_outputs, queue=False, cancels=answer_events)
+        chatbot.clear(reset, None, reset_outputs, queue=False, cancels=answer_events)
     return demo
 
 
