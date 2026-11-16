@@ -3,8 +3,9 @@ Production-grade Hebrew Chat Interface for Assignment 1 (Part A: Actor).
 Architectural visual polish pass:
 - Enforces strict 8px spacing grid (8, 16, 24, 32px)
 - Single primary typeface (Rubik) + monospace for code
-- WCAG AA compliant contrast ratios across all text states
-- Standardized interactive states (default, hover, active, focus-visible, disabled)
+- Bulletproof contrast: strict background-to-text pairing in both Light and Dark modes
+- Eliminates any possibility of black-on-black or white-on-white text
+- Standardized interactive states (default, hover, active, focus-visible)
 - Strictly avoids unrequested gradients, heavy shadows, and decorative emoji clutter
 """
 
@@ -29,7 +30,7 @@ CUSTOM_THEME = gr.themes.Soft(
 CUSTOM_CSS = """
 @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap');
 
-/* --- 1. CSS Reset & Variables (8px Grid & Color Tokens) --- */
+/* --- 1. CSS Variables for Light & Dark Mode --- */
 :root {
     --space-1: 4px;
     --space-2: 8px;
@@ -44,7 +45,7 @@ CUSTOM_CSS = """
     --radius-lg: 12px;
     --radius-full: 9999px;
 
-    /* Neutrals - WCAG AA compliant against #ffffff and #f8fafc */
+    /* Light Mode Palette (Default) */
     --surface-bg: #f8fafc;
     --surface-card: #ffffff;
     --surface-subtle: #f1f5f9;
@@ -52,23 +53,77 @@ CUSTOM_CSS = """
     --border-strong: #cbd5e1;
     --border-focus: #2563eb;
 
-    --text-primary: #0f172a;    /* 16.5:1 on white (AAA) */
-    --text-secondary: #475569;  /* 5.8:1 on white (AA) */
-    --text-muted: #64748b;      /* 4.6:1 on white (AA) */
+    --text-primary: #0f172a;
+    --text-secondary: #334155;
+    --text-muted: #64748b;
+
+    --input-bg: #ffffff;
+    --input-text: #0f172a;
+    --input-placeholder: #94a3b8;
+    --input-border: #cbd5e1;
+
+    --user-msg-bg: #2563eb;
+    --user-msg-text: #ffffff;
+
+    --bot-msg-bg: #ffffff;
+    --bot-msg-border: #e2e8f0;
+    --bot-msg-text: #0f172a;
+
+    --chip-bg: #ffffff;
+    --chip-border: #e2e8f0;
+    --chip-text: #334155;
+    --chip-hover-bg: #f1f5f9;
+    --chip-hover-text: #0f172a;
 
     /* Accent strictly for Primary Action */
-    --action-primary: #2563eb;       /* Blue 600 - 4.6:1 with white text (AA) */
-    --action-primary-hover: #1d4ed8; /* Blue 700 - 5.7:1 with white text (AAA) */
-    --action-primary-active: #1e40af;/* Blue 800 */
+    --action-primary: #2563eb;
+    --action-primary-hover: #1d4ed8;
+    --action-primary-active: #1e40af;
 
-    /* Semantic Status */
+    /* Status indicator */
     --status-active-dot: #16a34a;
     --status-active-bg: #f0fdf4;
     --status-active-border: #bbf7d0;
     --status-active-text: #166534;
 }
 
-/* Base Viewport & Direction */
+/* Dark Mode Palette (Triggered automatically by browser/OS or Gradio .dark) */
+.dark, :root.dark, body.dark, html.dark {
+    --surface-bg: #090d16;
+    --surface-card: #0f172a;
+    --surface-subtle: #1e293b;
+    --border-subtle: #1e293b;
+    --border-strong: #334155;
+    --border-focus: #3b82f6;
+
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5e1;
+    --text-muted: #94a3b8;
+
+    --input-bg: #0f172a;
+    --input-text: #f8fafc;
+    --input-placeholder: #64748b;
+    --input-border: #334155;
+
+    --user-msg-bg: #2563eb;
+    --user-msg-text: #ffffff;
+
+    --bot-msg-bg: #1e293b;
+    --bot-msg-border: #334155;
+    --bot-msg-text: #f8fafc;
+
+    --chip-bg: #0f172a;
+    --chip-border: #1e293b;
+    --chip-text: #cbd5e1;
+    --chip-hover-bg: #1e293b;
+    --chip-hover-text: #ffffff;
+
+    --status-active-bg: #052e16;
+    --status-active-border: #14532d;
+    --status-active-text: #86efac;
+}
+
+/* --- 2. Base Viewport & Direction --- */
 body, html, .gradio-container {
     font-family: 'Rubik', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
     direction: rtl !important;
@@ -85,14 +140,14 @@ body, html, .gradio-container {
     padding: var(--space-6) var(--space-4) !important;
 }
 
-/* --- 2. Header: Profile Showcase Card --- */
+/* --- 3. Header: Profile Showcase Card --- */
 .profile-card {
-    background-color: var(--surface-card);
-    border: 1px solid var(--border-subtle);
+    background-color: var(--surface-card) !important;
+    border: 1px solid var(--border-subtle) !important;
     border-radius: var(--radius-lg);
     padding: var(--space-5) var(--space-6);
     margin-bottom: var(--space-4);
-    box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.05);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -110,8 +165,8 @@ body, html, .gradio-container {
     width: 48px;
     height: 48px;
     border-radius: var(--radius-md);
-    background-color: #1e293b;
-    color: #ffffff;
+    background-color: #2563eb !important;
+    color: #ffffff !important;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -126,20 +181,20 @@ body, html, .gradio-container {
     font-size: 18px;
     line-height: 24px;
     font-weight: 600;
-    color: var(--text-primary);
+    color: var(--text-primary) !important;
 }
 
 .profile-titles p {
     margin: 0;
     font-size: 14px;
     line-height: 20px;
-    color: var(--text-secondary);
+    color: var(--text-secondary) !important;
 }
 
 .profile-titles .affiliation-sub {
     font-size: 13px;
     line-height: 18px;
-    color: var(--text-muted);
+    color: var(--text-muted) !important;
     margin-top: var(--space-1);
 }
 
@@ -162,9 +217,9 @@ body, html, .gradio-container {
 }
 
 .badge-status {
-    background-color: var(--status-active-bg);
-    border: 1px solid var(--status-active-border);
-    color: var(--status-active-text);
+    background-color: var(--status-active-bg) !important;
+    border: 1px solid var(--status-active-border) !important;
+    color: var(--status-active-text) !important;
 }
 
 .status-dot {
@@ -175,18 +230,18 @@ body, html, .gradio-container {
 }
 
 .badge-model {
-    background-color: var(--surface-subtle);
-    border: 1px solid var(--border-subtle);
-    color: var(--text-secondary);
+    background-color: var(--surface-subtle) !important;
+    border: 1px solid var(--border-subtle) !important;
+    color: var(--text-secondary) !important;
 }
 
 .badge-grounding {
-    background-color: var(--surface-card);
-    border: 1px solid var(--border-subtle);
-    color: var(--text-muted);
+    background-color: var(--surface-card) !important;
+    border: 1px solid var(--border-subtle) !important;
+    color: var(--text-muted) !important;
 }
 
-/* --- 3. Suggestion Chips Row --- */
+/* --- 4. Suggestion Chips Row --- */
 .suggestions-container {
     margin-bottom: var(--space-4);
 }
@@ -195,7 +250,7 @@ body, html, .gradio-container {
     font-size: 12px;
     line-height: 16px;
     font-weight: 600;
-    color: var(--text-muted);
+    color: var(--text-muted) !important;
     margin-bottom: var(--space-2);
     letter-spacing: 0.01em;
 }
@@ -206,41 +261,41 @@ body, html, .gradio-container {
     gap: var(--space-2);
 }
 
-.chip-btn {
-    background-color: var(--surface-card) !important;
-    border: 1px solid var(--border-subtle) !important;
+.chip-btn, button.chip-btn {
+    background-color: var(--chip-bg) !important;
+    border: 1px solid var(--chip-border) !important;
     border-radius: var(--radius-md) !important;
     padding: var(--space-2) var(--space-3) !important;
     font-size: 13px !important;
     line-height: 16px !important;
     font-weight: 500 !important;
-    color: var(--text-secondary) !important;
+    color: var(--chip-text) !important;
     cursor: pointer !important;
     transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease !important;
     box-shadow: none !important;
 }
 
-.chip-btn:hover {
-    background-color: var(--surface-subtle) !important;
+.chip-btn:hover, button.chip-btn:hover {
+    background-color: var(--chip-hover-bg) !important;
     border-color: var(--border-strong) !important;
-    color: var(--text-primary) !important;
+    color: var(--chip-hover-text) !important;
 }
 
-.chip-btn:active {
+.chip-btn:active, button.chip-btn:active {
     background-color: var(--border-subtle) !important;
 }
 
-.chip-btn:focus-visible {
+.chip-btn:focus-visible, button.chip-btn:focus-visible {
     outline: 2px solid var(--border-focus) !important;
     outline-offset: 2px !important;
 }
 
-/* --- 4. Chatbot Window & Messages --- */
+/* --- 5. Chatbot Window & Strict Message Contrast --- */
 .chat-window {
     background-color: var(--surface-card) !important;
     border: 1px solid var(--border-subtle) !important;
     border-radius: var(--radius-lg) !important;
-    box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.05) !important;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05) !important;
     overflow: hidden !important;
 }
 
@@ -258,7 +313,51 @@ body, html, .gradio-container {
     unicode-bidi: embed !important;
 }
 
-code {
+/* USER Message: ALWAYS Royal Blue with Pure White text (never dark on dark) */
+[data-testid="user"], 
+.message.user, 
+.user-row .bubble, 
+.user-row .message,
+.user-row [class*="bubble"],
+div[data-testid="user"] {
+    background-color: var(--user-msg-bg) !important;
+    color: var(--user-msg-text) !important;
+    border-radius: var(--radius-lg) var(--radius-lg) var(--radius-sm) var(--radius-lg) !important;
+}
+
+[data-testid="user"] *, 
+.message.user *, 
+.user-row .bubble *, 
+.user-row [class*="bubble"] *,
+div[data-testid="user"] * {
+    color: #ffffff !important;
+}
+
+/* BOT Message: Paired background and text (never light on light) */
+[data-testid="bot"], 
+.message.bot, 
+.message.assistant, 
+.bot-row .bubble, 
+.bot-row .message,
+.bot-row [class*="bubble"],
+div[data-testid="bot"] {
+    background-color: var(--bot-msg-bg) !important;
+    border: 1px solid var(--bot-msg-border) !important;
+    color: var(--bot-msg-text) !important;
+    border-radius: var(--radius-lg) var(--radius-lg) var(--radius-lg) var(--radius-sm) !important;
+}
+
+[data-testid="bot"] *, 
+.message.bot *, 
+.message.assistant *, 
+.bot-row .bubble *, 
+.bot-row [class*="bubble"] *,
+div[data-testid="bot"] * {
+    color: var(--bot-msg-text) !important;
+}
+
+/* Technical Code Blocks */
+code, pre code {
     direction: ltr !important;
     display: inline-block !important;
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
@@ -270,30 +369,30 @@ code {
     color: var(--text-primary) !important;
 }
 
-/* Empty State */
+/* Empty State Canvas */
 .empty-state-wrap {
     padding: var(--space-8) var(--space-4);
     text-align: center;
-    color: var(--text-muted);
+    color: var(--text-muted) !important;
 }
 
 .empty-state-title {
     font-size: 16px;
     line-height: 24px;
     font-weight: 600;
-    color: var(--text-primary);
+    color: var(--text-primary) !important;
     margin: 0 0 var(--space-2) 0;
 }
 
 .empty-state-desc {
     font-size: 14px;
     line-height: 20px;
-    color: var(--text-secondary);
+    color: var(--text-secondary) !important;
     max-width: 460px;
     margin: 0 auto;
 }
 
-/* --- 5. Bottom Action Bar --- */
+/* --- 6. Bottom Action Bar (Input & Buttons) --- */
 .action-row {
     margin-top: var(--space-4) !important;
     display: flex !important;
@@ -301,10 +400,12 @@ code {
     gap: var(--space-2) !important;
 }
 
-.chat-input textarea {
+.chat-input textarea,
+.gradio-container textarea {
     border-radius: var(--radius-md) !important;
-    border: 1px solid var(--border-strong) !important;
-    background-color: #ffffff !important;
+    border: 1px solid var(--input-border) !important;
+    background-color: var(--input-bg) !important;
+    color: var(--input-text) !important;
     font-size: 14px !important;
     line-height: 20px !important;
     padding: var(--space-3) var(--space-4) !important;
@@ -313,13 +414,20 @@ code {
     transition: border-color 0.15s ease, box-shadow 0.15s ease !important;
 }
 
-.chat-input textarea:focus {
+.chat-input textarea::placeholder,
+.gradio-container textarea::placeholder {
+    color: var(--input-placeholder) !important;
+    opacity: 1 !important;
+}
+
+.chat-input textarea:focus,
+.gradio-container textarea:focus {
     border-color: var(--border-focus) !important;
     box-shadow: 0 0 0 1px var(--border-focus) !important;
     outline: none !important;
 }
 
-.btn-primary {
+.btn-primary, button.btn-primary {
     background-color: var(--action-primary) !important;
     color: #ffffff !important;
     border-radius: var(--radius-md) !important;
@@ -333,20 +441,22 @@ code {
     box-shadow: none !important;
 }
 
-.btn-primary:hover {
+.btn-primary:hover, button.btn-primary:hover {
     background-color: var(--action-primary-hover) !important;
+    color: #ffffff !important;
 }
 
-.btn-primary:active {
+.btn-primary:active, button.btn-primary:active {
     background-color: var(--action-primary-active) !important;
+    color: #ffffff !important;
 }
 
-.btn-primary:focus-visible {
+.btn-primary:focus-visible, button.btn-primary:focus-visible {
     outline: 2px solid var(--border-focus) !important;
     outline-offset: 2px !important;
 }
 
-.btn-secondary {
+.btn-secondary, button.btn-secondary {
     background-color: var(--surface-card) !important;
     border: 1px solid var(--border-subtle) !important;
     border-radius: var(--radius-md) !important;
@@ -360,27 +470,27 @@ code {
     box-shadow: none !important;
 }
 
-.btn-secondary:hover {
+.btn-secondary:hover, button.btn-secondary:hover {
     background-color: var(--surface-subtle) !important;
     border-color: var(--border-strong) !important;
     color: var(--text-primary) !important;
 }
 
-.btn-secondary:active {
+.btn-secondary:active, button.btn-secondary:active {
     background-color: var(--border-subtle) !important;
 }
 
-.btn-secondary:focus-visible {
+.btn-secondary:focus-visible, button.btn-secondary:focus-visible {
     outline: 2px solid var(--border-focus) !important;
     outline-offset: 2px !important;
 }
 
-/* --- 6. Footer --- */
+/* --- 7. Footer --- */
 .footer-meta {
     text-align: center;
     font-size: 12px;
     line-height: 16px;
-    color: var(--text-muted);
+    color: var(--text-muted) !important;
     margin-top: var(--space-6);
 }
 """
