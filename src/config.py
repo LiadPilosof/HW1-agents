@@ -21,6 +21,7 @@ INSPECTION_LOG_PATH = LOGS_DIR / "inspection_log.json"
 
 # Model configuration
 DEFAULT_MODEL_NAME = os.getenv("MODEL_NAME", "gpt-4o-mini")
+CRITIC_MODEL_NAME = os.getenv("CRITIC_MODEL_NAME", DEFAULT_MODEL_NAME)
 
 
 def load_file_content(path: Path) -> str:

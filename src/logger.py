@@ -82,6 +82,70 @@ class InspectionLogger:
 
         return entry
 
+    def log_evaluation(
+        self,
+        user_message: str,
+        candidate_response: str,
+        evaluation: Optional[Any] = None,
+        technical_error: Optional[str] = None,
+        session_id: Optional[str] = None,
+        turn_index: int = 1,
+        attempt_number: int = 1,
+        scenario_id: Optional[str] = None,
+    ) -> Dict[str, Any]:
+        """
+        Record a standalone evaluation decision or technical error in the inspection log.
+        Mandated by Assignment 1: Part B.
+        In technical error, explicitly records that evaluation did not complete.
+        """
+        if technical_error:
+            status = "TECHNICAL_ERROR"
+            final_response = f"שגיאה טכנית: {technical_error}"
+            attempts = [
+                {
+                    "attempt_number": attempt_number,
+                    "candidate_response": candidate_response,
+                    "is_acceptable": None,  # Evaluation did not complete
+                    "feedback": f"ההערכה לא הושלמה עקב שגיאה טכנית: {technical_error}",
+                    "technical_error": technical_error,
+                }
+            ]
+        elif evaluation is not None:
+            is_acc = getattr(evaluation, "is_acceptable", False)
+            fb = getattr(evaluation, "feedback", "")
+            status = "APPROVED" if is_acc else "REJECTED"
+            final_response = candidate_response if is_acc else ""
+            attempts = [
+                {
+                    "attempt_number": attempt_number,
+                    "candidate_response": candidate_response,
+                    "is_acceptable": is_acc,
+                    "feedback": fb,
+                }
+            ]
+        else:
+            raise ValueError("Either evaluation or technical_error must be provided.")
+
+        entry = {
+            "entry_id": str(uuid.uuid4()),
+            "timestamp": datetime.now().isoformat(),
+            "session_id": session_id or "default_session",
+            "turn_index": turn_index,
+            "scenario_id": scenario_id,
+            "user_message": user_message,
+            "status": status,
+            "final_response": final_response,
+            "attempts": attempts,
+        }
+
+        logs = self.read_logs()
+        logs.append(entry)
+
+        with open(self.log_path, "w", encoding="utf-8") as f:
+            json.dump(logs, f, indent=2, ensure_ascii=False)
+
+        return entry
+
     def clear(self) -> None:
         """Clear all entries in the log file."""
         with open(self.log_path, "w", encoding="utf-8") as f:
