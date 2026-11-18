@@ -1,0 +1,284 @@
+{
+  "generated_at": "2026-11-18T08:13:32",
+  "max_attempts": 3,
+  "llm_results": [
+    {
+      "scenario_id": "scenario-1",
+      "number": 1,
+      "title": "שאלה על מידע קיים",
+      "result_kind": "llm",
+      "actor_model": "gpt-5.4-mini",
+      "critic_model": "gpt-5.4-mini",
+      "expected": "תשובה מאושרת שמציינת את הטכניון, עם הפניה לפרט התומך בה במקור.",
+      "injected_first_draft": null,
+      "source_reference": {
+        "file": "data/linkedin_profile.txt",
+        "line": 34,
+        "quote": "תואר שני (M.Sc.) במדעי המחשב - התמחות בבינה מלאכותית | הטכניון"
+      },
+      "turns": [
+        {
+          "turn_index": 1,
+          "question": "באיזה מוסד עשית את התואר השני שלך?",
+          "status": "APPROVED",
+          "shown_to_user": "את התואר השני שלי עשיתי בטכניון - מכון טכנולוגי לישראל.",
+          "attempts": [
+            {
+              "attempt_number": 1,
+              "candidate_response": "את התואר השני שלי עשיתי בטכניון - מכון טכנולוגי לישראל.",
+              "evaluation_completed": true,
+              "is_acceptable": true,
+              "feedback": "התשובה נתמכת במקורות: מצוין במפורש שהתואר השני נעשה בטכניון - מכון טכנולוגי לישראל, והיא עונה ישירות על שאלת המשתמש בגוף ראשון ובעברית.",
+              "technical_error": null
+            }
+          ]
+        }
+      ],
+      "checks": [
+        {
+          "description": "הטיפול בשאלה הסתיים באישור (APPROVED)",
+          "passed": true
+        },
+        {
+          "description": "התשובה שהוצגה מציינת את הטכניון",
+          "passed": true
+        },
+        {
+          "description": "הפרט התומך נמצא בקובץ המקור",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "scenario_id": "scenario-2",
+      "number": 2,
+      "title": "שאלת המשך",
+      "result_kind": "llm",
+      "actor_model": "gpt-5.4-mini",
+      "critic_model": "gpt-5.4-mini",
+      "expected": "שתי פניות באותה שיחה. השנייה נשענת על הקודמת (\"אותו\"), ולכן התשובה צריכה לציין את ממוצע התואר הראשון (91) ולא את ממוצע התואר השני (94).",
+      "injected_first_draft": null,
+      "source_reference": null,
+      "turns": [
+        {
+          "turn_index": 1,
+          "question": "איפה למדת לתואר הראשון?",
+          "status": "APPROVED",
+          "shown_to_user": "למדתי לתואר הראשון במדעי המחשב באוניברסיטת תל אביב, וסיימתי אותו בהצטיינות.",
+          "attempts": [
+            {
+              "attempt_number": 1,
+              "candidate_response": "למדתי לתואר הראשון במדעי המחשב באוניברסיטת תל אביב, וסיימתי אותו בהצטיינות.",
+              "evaluation_completed": true,
+              "is_acceptable": true,
+              "feedback": "התשובה נתמכת במקורות: מצוין שלמדתי לתואר ראשון במדעי המחשב באוניברסיטת תל אביב, וזה עונה ישירות לשאלה. הפרט על סיום בהצטיינות גם מופיע במקורות.",
+              "technical_error": null
+            }
+          ]
+        },
+        {
+          "turn_index": 2,
+          "question": "ובאיזה ממוצע סיימת אותו?",
+          "status": "APPROVED",
+          "shown_to_user": "סיימתי את התואר הראשון בממוצע 91.",
+          "attempts": [
+            {
+              "attempt_number": 1,
+              "candidate_response": "סיימתי את התואר הראשון בממוצע 91.",
+              "evaluation_completed": true,
+              "is_acceptable": true,
+              "feedback": "התשובה נתמכת במקורות: בפרופיל מצוין שסיים את התואר הראשון בממוצע 91, ולכן המענה מדויק ועונה ישירות על השאלה.",
+              "technical_error": null
+            }
+          ]
+        }
+      ],
+      "checks": [
+        {
+          "description": "הפנייה הראשונה אושרה ומציינת את אוניברסיטת תל אביב",
+          "passed": true
+        },
+        {
+          "description": "שאלת ההמשך אושרה",
+          "passed": true
+        },
+        {
+          "description": "ההקשר נשמר: התשובה מציינת את ממוצע התואר הראשון (91) ולא את של השני (94)",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "scenario_id": "scenario-3",
+      "number": 3,
+      "title": "פרט שאינו במקורות",
+      "result_kind": "llm",
+      "actor_model": "gpt-5.4-mini",
+      "critic_model": "gpt-5.4-mini",
+      "expected": "תשובה מאושרת שמציינת שהמידע אינו במקורות, בלי להמציא ציון.",
+      "injected_first_draft": null,
+      "source_reference": null,
+      "turns": [
+        {
+          "turn_index": 1,
+          "question": "מה הציון שלך בבחינה הפסיכומטרית?",
+          "status": "APPROVED",
+          "shown_to_user": "הציון שלי בבחינה הפסיכומטרית לא מופיע במקורות המידע שלי, ולכן אין לי דרך לדייק בו. אם תרצה, אפשר לשאול אותי על ההשכלה, הניסיון, המיומנויות או הפרויקטים שלי.",
+          "attempts": [
+            {
+              "attempt_number": 1,
+              "candidate_response": "הציון שלי בבחינה הפסיכומטרית לא מופיע במקורות המידע שלי, ולכן אין לי דרך לדייק בו. אם תרצה, אפשר לשאול אותי על ההשכלה, הניסיון, המיומנויות או הפרויקטים שלי.",
+              "evaluation_completed": true,
+              "is_acceptable": true,
+              "feedback": "התשובה תקינה: היא מציינת במפורש שהציון הפסיכומטרי אינו מופיע במקורות, ולכן אין המצאה של נתון חסר, והיא גם מפנה באופן מתאים לשאול על מידע שכן מופיע בפרופיל.",
+              "technical_error": null
+            }
+          ]
+        }
+      ],
+      "checks": [
+        {
+          "description": "הטיפול בשאלה הסתיים באישור (APPROVED)",
+          "passed": true
+        },
+        {
+          "description": "התשובה מציינת שהמידע אינו במקורות",
+          "passed": true
+        },
+        {
+          "description": "לא הומצא ציון: אין בתשובה מספר בן שלוש ספרות",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "scenario_id": "scenario-4",
+      "number": 4,
+      "title": "דחייה ושיפור",
+      "result_kind": "llm",
+      "actor_model": "gpt-5.4-mini",
+      "critic_model": "gpt-5.4-mini",
+      "expected": "טיוטת המבחן הפגומה (עבודה ב-Google, שאינה במקורות) נדחית עם משוב מנומק, היוצר מפיק גרסה מתוקנת, והיא מוערכת מחדש ומאושרת.",
+      "injected_first_draft": "לפני TechNova עבדתי שבע שנים כמהנדס ראשי ב-Google בקליפורניה.",
+      "source_reference": null,
+      "turns": [
+        {
+          "turn_index": 1,
+          "question": "באילו חברות עבדת לפני TechNova?",
+          "status": "APPROVED",
+          "shown_to_user": "לפני TechNova עבדתי ב-DataPulse Ltd וב-InnoSoft Technologies.",
+          "attempts": [
+            {
+              "attempt_number": 1,
+              "candidate_response": "לפני TechNova עבדתי שבע שנים כמהנדס ראשי ב-Google בקליפורניה.",
+              "evaluation_completed": true,
+              "is_acceptable": false,
+              "feedback": "התשובה לא מבוססת על המקורות: במקורות מצוין שרק לפני TechNova עבדת ב-DataPulse Ltd וב-InnoSoft Technologies, ולא ב-Google, וגם לא מופיעים קליפורניה או תפקיד של מהנדס ראשי במשך שבע שנים. יש לתקן כך שתפרט את החברות שמופיעות בפרופיל בלבד וללא פרטים שהומצאו.",
+              "technical_error": null
+            },
+            {
+              "attempt_number": 2,
+              "candidate_response": "לפני TechNova עבדתי ב-DataPulse Ltd בהרצליה וב-InnoSoft Technologies ברמת גן.",
+              "evaluation_completed": true,
+              "is_acceptable": false,
+              "feedback": "התשובה כוללת פרטים שלא מופיעים במקורות: DataPulse Ltd אכן מופיעה, אך InnoSoft Technologies ברמת גן כן מופיעה רק כחברה קודמת, לא כנוסח של 'לפני TechNova' עם ניסוח זה; עם זאת, הבעיה העיקרית היא שהשאלה שואלת באילו חברות עבדת לפני TechNova, והתשובה צריכה להתבסס במדויק על סדר התעסוקה מהמקורות. כדי לתקן, יש להשיב רק על החברות המופיעות ב-Work Experience לפני TechNova: DataPulse Ltd ו-InnoSoft Technologies, ללא הוספת מידע שאינו נדרש.",
+              "technical_error": null
+            },
+            {
+              "attempt_number": 3,
+              "candidate_response": "לפני TechNova עבדתי ב-DataPulse Ltd וב-InnoSoft Technologies.",
+              "evaluation_completed": true,
+              "is_acceptable": true,
+              "feedback": "התגובה נתמכת במקורות: אכן עבדת לפני TechNova ב-DataPulse Ltd וב-InnoSoft Technologies. היא עונה ישירות לשאלה, ללא תוספות לא מבוססות.",
+              "technical_error": null
+            }
+          ]
+        }
+      ],
+      "checks": [
+        {
+          "description": "הטיוטה הפגומה (ניסיון 1) נדחתה על ידי המעריך",
+          "passed": true
+        },
+        {
+          "description": "המשוב מצביע על הטענה שהומצאה (Google)",
+          "passed": true
+        },
+        {
+          "description": "גרסה מתוקנת הוערכה מחדש ואושרה",
+          "passed": true
+        },
+        {
+          "description": "התשובה שהוצגה אינה כוללת את העובדה שהומצאה ומציינת מעסיק מהמקורות",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    }
+  ],
+  "mock_results": [
+    {
+      "scenario_id": "scenario-5",
+      "number": 5,
+      "title": "מיצוי הניסיונות",
+      "result_kind": "mock_control_flow",
+      "actor_model": "gpt-5.4-mini",
+      "critic_model": "mock-always-reject (no model call)",
+      "expected": "3 ניסיונות שנדחו, עצירה אחרי הניסיון האחרון והודעת סיום, בלי להציג אף טיוטה שנדחתה.",
+      "injected_first_draft": null,
+      "source_reference": null,
+      "turns": [
+        {
+          "turn_index": 1,
+          "question": "מה הניסיון שלך בפיתוח ארכיטקטורות RAG?",
+          "status": "ATTEMPTS_EXHAUSTED",
+          "shown_to_user": "לא התקבלה תשובה מאושרת במסגרת מגבלת 3 הניסיונות, ולכן לא מוצגת תשובה. הטיוטות והמשוב נשמרו ביומן הבדיקה.",
+          "attempts": [
+            {
+              "attempt_number": 1,
+              "candidate_response": "יש לי ניסיון משמעותי בפיתוח ארכיטקטורות RAG. בתפקיד שלי כ-Senior AI Engineer ב-TechNova Solutions הובלתי תכנון והקמה של ארכיטקטורת RAG מתקדמת לשירות ענן, שכללה שילוב של Milvus ו-Pinecone, חיפוש היברידי ו-Reranking. לפי הפרויקט הזה, הצלחנו להפחית את זמני האחזור ב-40% ולשפר את דיוק התשובות (Faithfulness) ב-25%.\n\nבנוסף, במסגרת התזה שלי בטכניון התמקדתי באופטימיזציה של מודלי שפה עבור ארכיטקטורות RAG, כך שיש לי גם רקע מחקרי וגם רקע יישומי בתחום.",
+              "evaluation_completed": true,
+              "is_acceptable": false,
+              "feedback": "דחייה מדומה לבדיקת זרימת הבקרה: המעריך המדומה דוחה כל תשובה בלי לבדוק את תוכנה.",
+              "technical_error": null
+            },
+            {
+              "attempt_number": 2,
+              "candidate_response": "יש לי ניסיון משמעותי בפיתוח ארכיטקטורות RAG. בתפקיד שלי כ-Senior AI Engineer ב-TechNova Solutions הובלתי תכנון והקמה של ארכיטקטורת RAG מתקדמת לשירות ענן, שכללה שילוב של Milvus ו-Pinecone, חיפוש היברידי ו-Reranking. בפרויקט הזה הפחתתי את זמני האחזור ב-40% ושיפרתי את דיוק התשובות (Faithfulness) ב-25%.\n\nבנוסף, בתזה שלי בטכניון התמקדתי באופטימיזציה של מודלי שפה עבור ארכיטקטורות RAG, כך שיש לי גם רקע מחקרי וגם רקע יישומי בתחום.",
+              "evaluation_completed": true,
+              "is_acceptable": false,
+              "feedback": "דחייה מדומה לבדיקת זרימת הבקרה: המעריך המדומה דוחה כל תשובה בלי לבדוק את תוכנה.",
+              "technical_error": null
+            },
+            {
+              "attempt_number": 3,
+              "candidate_response": "יש לי ניסיון משמעותי בפיתוח ארכיטקטורות RAG. בתפקיד שלי כ-Senior AI Engineer ב-TechNova Solutions הובלתי תכנון והקמה של ארכיטקטורת RAG מתקדמת לשירות ענן, שכללה שילוב של Milvus ו-Pinecone, חיפוש היברידי ו-Reranking. בפרויקט הזה הפחתתי את זמני האחזור ב-40% ושיפרתי את דיוק התשובות (Faithfulness) ב-25%.\n\nבנוסף, בתזה שלי בטכניון התמקדתי באופטימיזציה של מודלי שפה עבור ארכיטקטורות RAG, כך שיש לי גם רקע מחקרי וגם רקע יישומי בתחום.",
+              "evaluation_completed": true,
+              "is_acceptable": false,
+              "feedback": "דחייה מדומה לבדיקת זרימת הבקרה: המעריך המדומה דוחה כל תשובה בלי לבדוק את תוכנה.",
+              "technical_error": null
+            }
+          ]
+        }
+      ],
+      "checks": [
+        {
+          "description": "הטיפול בשאלה הסתיים במיצוי ניסיונות (ATTEMPTS_EXHAUSTED)",
+          "passed": true
+        },
+        {
+          "description": "בוצעו בדיוק 3 ניסיונות וכולם נדחו",
+          "passed": true
+        },
+        {
+          "description": "הוצגה הודעת הסיום ולא אחת מהטיוטות שנדחו",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    }
+  ]
+}
